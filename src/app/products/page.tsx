@@ -1,0 +1,105 @@
+import { Truck } from "lucide-react";
+import { Heart } from "lucide-react";
+import { Share2 } from "lucide-react";
+const Page = () => {
+  return (
+    <div className="w-screen flex justify-center mt-52">
+      <div className="w-[1200px] font-medium font-sans ">
+        <div className="flex justify-center justify-between border-b-2 pb-5 mb-6 text-sm">
+          <div className="">Нийтэлсэн огноо:2025/02/11 12:16</div>
+          <div className="flex">
+            <div className="flex">
+              <Heart className="w-[18px]" />
+              <div className="mr-4 pl-1">Хадгалах</div>
+            </div>
+            <div className="flex">
+              <Share2 className="w-[18px]" />
+              <div className="pl-1">Хуваалцах</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex">
+          <div className="w-[700px] pr-6">
+            <div>
+              <img
+                className="w-[660px] h-full"
+                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
+                alt=""
+              />
+            </div>
+
+            <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10">
+              <img
+                className="border-white hover:border-rose-500 border-2"
+                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
+                alt=""
+              />
+              <img
+                className=" border-white hover:border-rose-500 border-2"
+                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
+                alt=""
+              />
+              <img
+                className="border-white hover:border-rose-500 border-2"
+                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
+                alt=""
+              />
+            </div>
+
+            <div>
+              <div className="text-xl pb-5">Зарын эзнээс асуух уу</div>
+              <div className="flex flex-wrap gap-5 w-[500px] ">
+                <button className="bg-rose-200 w-30 h-10 pr-3 pl-3 rounded-xl">
+                  Энэ бараа байгаа юу?
+                </button>
+                <button className="bg-rose-200 w-30 h-10 pr-3 pl-3 rounded-xl">
+                  Хямдрал, хөнгөлөлт байгаа юу?
+                </button>
+                <button className="bg-rose-200 w-30 h-10 pr-3 pl-3 rounded-xl">
+                  Бартер хийх боломжтой юу?
+                </button>
+                <button className="bg-rose-200 w-30 h-10 pr-3 pl-3 rounded-xl">
+                  Өөр бодит зураг байна уу?
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-[500px] pl-6">
+            <div className="bg-rose-200 w-20 text-lg flex justify-center items-center rounded-l-sm mb-3 rounded-r-full">
+              Шинэ
+            </div>
+            <div className="text-4xl mb-3">Nike dunk low "white/black" </div>
+            <div className="text-4xl mb-7">369,000 ₮</div>
+
+            <div className="mb-10">
+              <div className="mb-4">Гутлын размер:</div>
+              <div className="flex gap-4 ">
+                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
+                  40
+                </button>
+                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
+                  41
+                </button>
+                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
+                  42
+                </button>
+              </div>
+            </div>
+
+            <div className="text-2xl mb-3">Хүргэлттэй</div>
+            <div className="flex items-center w-[500px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2">
+              <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
+                <Truck className="w-5" />
+              </div>
+              <div className="">Хүргэлттэй</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Page;
