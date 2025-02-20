@@ -16,7 +16,7 @@ const Page = () => {
   return (
     <div className="w-screen flex justify-center mt-52">
       <div className="w-[1200px] font-medium font-sans ">
-        <div className="flex justify-center justify-between border-b-2 pb-5 mb-6 text-sm">
+        <div className="flex justify-between border-b-2 pb-5 mb-6 text-sm">
           <div className="">Нийтэлсэн огноо:2025/02/11 12:16</div>
           <div className="flex">
             <div className="flex">
