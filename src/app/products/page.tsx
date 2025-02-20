@@ -14,10 +14,6 @@ const Page = () => {
 
   const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
 
-  const productShoeSize = () => {
-    console.log("div");
-  };
-
   return (
     <div className="w-screen flex justify-center mt-52">
       <div className="w-[1200px] font-medium font-sans ">
@@ -85,10 +81,7 @@ const Page = () => {
               <div className="mb-4">Гутлын размер:</div>
 
               <div className="flex gap-4 ">
-                <button
-                  className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2"
-                  onClick={productShoeSize}
-                >
+                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
                   40
                 </button>
               </div>
