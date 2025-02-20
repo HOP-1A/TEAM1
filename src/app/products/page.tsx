@@ -1,6 +1,7 @@
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
+
 const Page = () => {
   return (
     <div className="w-screen flex justify-center mt-52">
