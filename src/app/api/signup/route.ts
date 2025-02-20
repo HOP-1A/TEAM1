@@ -22,12 +22,8 @@ export const POST = async(req:Request) =>{
                 phoneNumber: body?.phoneNumber,
             }
         })
-
-
-        console.log(user)
         return NextResponse.json({user, token: generateJWT(user)})
     }catch(err){
-        console.log(err)
-        return NextResponse.json({error:" Failed to create user"}, {status:500})
+        return NextResponse.json({error:err}, {status:500})
     }
 }

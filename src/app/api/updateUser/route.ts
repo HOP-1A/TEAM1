@@ -12,11 +12,8 @@ export const PUT = async(req:Request) =>{
                 username: body?.username
             }
         })
-
-        console.log(user)
         return NextResponse.json({user})
     }catch(err){
-        console.log(err)
-        return NextResponse.json({error: "Failed to update user"}, {status:500})
+        return NextResponse.json({error: err}, {status:500})
     }
 }

@@ -11,7 +11,7 @@ const generateJWT = (users: Users): string=>{
 export const POST = async(req:Request) =>{ 
     try{
         const body = await req.json()
-        console.log(body.phoneNumber)
+        
         const user = await prisma.users.findUnique({
             where: {
                 phoneNumber: body.phoneNumber
@@ -30,7 +30,7 @@ export const POST = async(req:Request) =>{
                 return NextResponse.json({message:"login success", token: generateJWT})
             }
         }
-                // return NextResponse.json({message:"hello"})
+    
         
     }catch(err){
         return NextResponse.json(err)
