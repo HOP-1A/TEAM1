@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 
 
@@ -28,6 +29,9 @@ const formSchema = z.object({
 
 const handleRequest = (items: z.infer<typeof formSchema>) => {
     console.log(items);
+    /*
+    REQUEST TO SERVER
+    */
 }
 export default function Home() {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -42,11 +46,11 @@ export default function Home() {
             <div>
                 {/* navbar */}
             </div>
-            <div className="flex flex-col justify-center items-center p-5 m-5 border w-[450px]">
+            <div className="flex flex-col justify-center items-center p-5 m-5 border w-[450px] rounded-xl shadow-sm">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleRequest)} className="flex flex-col">
-                        <div className="mb-10">
-                            <span>
+                        <div className="mb-6 flex justify-center">
+                            <span className="font-semibold text-2xl">
                                 Нэвтрэх
                             </span>
                         </div>
@@ -57,7 +61,7 @@ export default function Home() {
                                 name="phoneNumber"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Утасны дугаар</FormLabel>
+                                        <FormLabel className="ml-1 text-[#888a99] text-sm">Утасны дугаар</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -83,16 +87,15 @@ export default function Home() {
                                         </div>
                                         <Link
                                             href={{
-                                                pathname: '/signup',
+                                                pathname: '/reset-password',
                                             }}
-                                            className="text-[#888a99] text-sm font-semibold">
-                                            
+                                            className="text-[#888a99] text-sm">
+
                                             Нууц үг мартсан?
                                         </Link>
                                     </FormItem>
                                 )}
                             />
-
                             <Button type="submit" className="bg-[#ff3467] py-6">Нэвтрэх</Button>
                         </div>
                         <div className="flex justify-between items-center my-8">
@@ -108,22 +111,42 @@ export default function Home() {
                         </div>
                         <div className="flex flex-col items-center gap-6 justify-center">
                             <div>
-                                <Button className="bg-[#ff3467] px-40 py-6">
+                                <Button className="bg-[#cdcdcf] hover:bg-[#c1c1c3] px-40 py-6 text-gray-600 font-semibold shadow-none">
                                     <Link
                                         href={{
-                                            pathname: '/signup',
+                                            pathname: '/register',
                                         }}>
                                         Бүхтгүүлэх
                                     </Link>
                                 </Button>
                             </div>
                             <div>
-                                <p className="text-center">
-                                    Утасны дугаараа оруулан нэвтрэх эсвэл бүртгүүлэх товчийг дарж zary.mn вебсайтад нэвтэрснээр таныг тус вебсайтынүйлчилгээний нөхцөлболоннууцлалын бодлогыгхүлээн зөвшөөрсөнд тооцно.
+                                <p className="text-center text-sm space-x-1">
+                                    <span>Утасны дугаараа оруулан нэвтрэх эсвэл бүртгүүлэх товчийг дарж zary.mn
+                                    вебсайтад нэвтэрснээр таныг тус вебсайтын </span>
+                                    <Link
+                                        href={{
+                                            pathname: '/terms',
+                                        }}
+                                        className="text-[#ff3467]"
+                                        >
+                                         үйлчилгээний нөхцөл
+                                    </Link>
+                                    <span>болон</span>
+                                    <Link
+                                        href={{
+                                            pathname: '/policy',
+                                        }}
+                                        className="text-[#ff3467]"
+                                        >
+                                    нууцлалын бодлогыг  
+                                    </Link>
+                                    <span>
+                                        хүлээн зөвшөөрсөнд тооцно.
+                                    </span>
                                 </p>
                             </div>
                         </div>
-
                     </form>
                 </Form>
             </div>
