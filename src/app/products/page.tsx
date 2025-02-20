@@ -1,8 +1,23 @@
+"use client";
+
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
+import { useState } from "react";
 
 const Page = () => {
+  const productImgs = [
+    "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
+    "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
+    "https://pimpkicks.com.ph/cdn/shop/products/NikeDunkLowWhiteBlackMen_s_1024x1024.jpg?v=1618734774",
+  ];
+
+  const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
+
+  const productShoeSize = () => {
+    console.log("div");
+  };
+
   return (
     <div className="w-screen flex justify-center mt-52">
       <div className="w-[1200px] font-medium font-sans ">
@@ -23,29 +38,21 @@ const Page = () => {
         <div className="flex">
           <div className="w-[700px] pr-6">
             <div>
-              <img
-                className="w-[660px] h-full"
-                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
-                alt=""
-              />
+              <img className="w-[660px] h-full" src={selectProductImg} alt="" />
             </div>
 
             <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10">
-              <img
-                className="border-white hover:border-rose-500 border-2"
-                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
-                alt=""
-              />
-              <img
-                className=" border-white hover:border-rose-500 border-2"
-                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
-                alt=""
-              />
-              <img
-                className="border-white hover:border-rose-500 border-2"
-                src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/d04a3567-0130-450f-bb96-32687814adde/NIKE+DUNK+LOW+RETRO.png"
-                alt=""
-              />
+              {productImgs.map((productImg, i) => {
+                return (
+                  <img
+                    onClick={() => setSelectedProductImg(productImg)}
+                    key={i}
+                    className="border-white hover:border-rose-500 border-2"
+                    src={productImg}
+                    alt=""
+                  />
+                );
+              })}
             </div>
 
             <div>
@@ -76,15 +83,13 @@ const Page = () => {
 
             <div className="mb-10">
               <div className="mb-4">Гутлын размер:</div>
+
               <div className="flex gap-4 ">
-                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
+                <button
+                  className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2"
+                  onClick={productShoeSize}
+                >
                   40
-                </button>
-                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
-                  41
-                </button>
-                <button className="text-sm w-12 h-9 rounded-lg hover:border-rose-500 border-2">
-                  42
                 </button>
               </div>
             </div>
