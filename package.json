@@ -10,12 +10,6 @@
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
-<<<<<<< HEAD
-    "@radix-ui/react-popover": "^1.1.6",
-    "@radix-ui/react-slot": "^1.1.2",
-    "bcrypt": "^5.1.1",
-=======
->>>>>>> c316c9affc19879742957c0957ea46f2c66128d4
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
