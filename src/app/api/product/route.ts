@@ -10,6 +10,7 @@ export const POST = async(req:Request)=>{
                 price: body?.price,
                 quantity: body?.quantity,
                 description: body?.description,
+                productImg: body?.productImg,
                 categoryId: body?.categoryId,
                 name: body?.name,
                 delivery: body?.delivery,
