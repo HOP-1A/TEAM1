@@ -1,10 +1,10 @@
+import { prisma } from "@/lib/prisma";
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 
 const Page = async () => {
-  const resJSON = await fetch("api/category");
-  const categories = await resJSON.json();
+  const categories = await prisma.category.findMany();
   console.log(categories);
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",

@@ -7,11 +7,6 @@ import { Button } from "@/components/ui/button";
 import { create } from "domain";
 
 const Page = () => {
-  //
-  useEffect(() => {
-    getCategory();
-  }, []);
-
   // const [name, setName] = useState("");
   // const [price, setPrice] = useState(0);
   // const [quantity, setQuantity] = useState(0);
@@ -75,13 +70,6 @@ const Page = () => {
   //   const loggedIn = await resJSON.json();
   //   console.log(loggedIn);
   // };
-
-  const getCategory = async () => {
-    const resJSON = await fetch("api/category");
-
-    const categories = await resJSON.json();
-    console.log(categories);
-  };
 
   return (
     <div className="flex">
