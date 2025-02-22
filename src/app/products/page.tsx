@@ -1,18 +1,16 @@
-"use client";
-
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
-import { useState } from "react";
 
-const Page = () => {
+const Page = async () => {
+  const resJSON = await fetch("api/category");
+  const categories = await resJSON.json();
+  console.log(categories);
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
     "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
     "https://pimpkicks.com.ph/cdn/shop/products/NikeDunkLowWhiteBlackMen_s_1024x1024.jpg?v=1618734774",
   ];
-
-  const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
 
   return (
     <div className="w-screen flex justify-center mt-52">
@@ -33,15 +31,10 @@ const Page = () => {
 
         <div className="flex">
           <div className="w-[700px] pr-6">
-            <div>
-              <img className="w-[660px] h-full" src={selectProductImg} alt="" />
-            </div>
-
             <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10">
               {productImgs.map((productImg, i) => {
                 return (
                   <img
-                    onClick={() => setSelectedProductImg(productImg)}
                     key={i}
                     className="border-white hover:border-rose-500 border-2"
                     src={productImg}
@@ -74,7 +67,7 @@ const Page = () => {
             <div className="bg-rose-200 w-20 text-lg flex justify-center items-center rounded-l-sm mb-3 rounded-r-full">
               Шинэ
             </div>
-            <div className="text-4xl mb-3">Nike dunk low "white/black" </div>
+            <div className="text-4xl mb-3">Nike dunk low white/black </div>
             <div className="text-4xl mb-7">369,000 ₮</div>
 
             <div className="mb-10">
