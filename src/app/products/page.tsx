@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
@@ -104,3 +105,23 @@ const Page = () => {
 };
 
 export default Page;
+=======
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient();
+
+const Page = async () => {
+    const users = await prisma.users.findMany()
+    console.log(users)
+    return (
+        <>
+        <div>
+
+        </div>
+        </>
+    )
+}
+
+
+export default Page
+>>>>>>> c316c9affc19879742957c0957ea46f2c66128d4
