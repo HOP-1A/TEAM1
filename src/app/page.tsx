@@ -1,30 +1,10 @@
-<<<<<<< Updated upstream
-export default function Home() {
-  return <div>conflict haruuly</div>;
-}
-=======
 "use client";
 
-import { prisma } from "@/lib/prisma";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { create } from "domain";
 
 const Page = () => {
-  // const getUsers = async () => {
-  //   const users = await prisma.users.findMany({
-  //     include:{
-  //       Product:true,
-  //     }
-  //   });
-  //   console.log(users);
-  // };
-  //
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -93,4 +73,3 @@ const Page = () => {
 };
 
 export default Page;
->>>>>>> Stashed changes
