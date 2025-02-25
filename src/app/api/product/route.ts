@@ -21,6 +21,16 @@ export const POST = async(req:Request)=>{
         return NextResponse.json({message: product})
 
     }catch(err){
-        NextResponse.json({error:err})
+        return NextResponse.json({error:err})
+    }
+}
+
+
+export const GET = async()=>{
+    try{
+        const product = await prisma.product.findMany()
+        return NextResponse.json(product)
+    }catch(err){
+       return  NextResponse.json(err)
     }
 }

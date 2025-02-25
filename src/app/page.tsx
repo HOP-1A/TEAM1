@@ -4,76 +4,83 @@ import { prisma } from "@/lib/prisma";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { create } from "domain";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Page = () => {
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState(0);
-  // const [quantity, setQuantity] = useState(0);
-  // const [description, setDescription] = useState("");
-  // const [categoryId, setCategoryId] = useState("");
-  // const [delivery, setDelivery] = useState(false);
-  // const [usersId, setUsersId] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [description, setDescription] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [delivery, setDelivery] = useState(false);
+  const [usersId, setUsersId] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [productImg, setProductImg] = useState([""]);
+  const [product, setProduct] = useState([]);
 
-  // const [categoryType, setCategoryType] = useState("");
+  const getCategory = async () => {
+    try {
+      const resJSON = await fetch("api/category");
 
-  // const createUser = async () => {
-  //   const data = {
-  //     email,
-  //     username,
-  //     password,
-  //     phoneNumber,
-  //   };
+      const gotCategories = await resJSON.json();
 
-  //   const resJSON = await fetch("api/signup", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   });
+      if (!gotCategories) {
+        console.log("No categories returned");
+        return;
+      }
+      setCategories(gotCategories);
+      console.log(gotCategories);
+    } catch (error) {
+      console.error("Failed to fetch or parse category data:", error);
+    }
+  };
 
-  //   const user = await resJSON.json();
-  //   console.log(user);
-  // };
+  const products = async () => {
+    try {
+      const resJSON = await fetch("api/product");
+      const getProduct = await resJSON.json();
+      setProduct(getProduct);
+      console.log(getProduct);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getCategory();
+    products();
+  }, []);
 
-  // const login = async () => {
-  //   const data = {
-  //     password,
-  //     phoneNumber,
-  //   };
+  const createProduct = async () => {
+    const data = {
+      price,
+      quantity,
+      description,
+      categoryId,
+      name,
+      productImg,
+      delivery,
+      usersId,
+    };
 
-  //   const resJSON = await fetch("api/login", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   });
+    const resJSON = await fetch("api/product", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
 
-  //   const loggedIn = await resJSON.json();
-  //   console.log(loggedIn);
-  // };
-
-  // const createProduct = async () => {
-  //   const data = {
-  //     price,
-  //     quantity,
-  //     description,
-  //     categoryId,
-  //     name,
-  //     delivery,
-  //     usersId,
-  //   };
-
-  //   console.log(data);
-
-  //   const resJSON = await fetch("api/products", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   });
-
-  //   const loggedIn = await resJSON.json();
-  //   console.log(loggedIn);
-  // };
+    const product = await resJSON.json();
+    console.log(product);
+  };
 
   return (
     <div className="flex">
-      {/* <div>
+      <div>
         <Input placeholder="name" onChange={(e) => setName(e.target.value)} />
       </div>
       <div>
@@ -101,27 +108,33 @@ const Page = () => {
         />
       </div>
       <div>
-        <select onChange={(e) => setCategoryId(e.target.value)} id="category">
-          <option value="eregtei">eregtei</option>
-          <option value="emegtei">emegtei</option>
-          <option value="goo saikhan">goo saikhan</option>
-          <option value="utas">utas</option>
-        </select>
+        <Input
+          placeholder="imgUrl"
+          onChange={(e) => setProductImg([...productImg, e.target.value])}
+        />
       </div>
       <div>
-        <select
-          onChange={(e) => setDelivery(Boolean(e.target.value))}
-          id="delivery"
-        >
-          <option value="true">true</option>
-          <option value="false">false</option>
-        </select>
-      </div> */}
-      <div>
-        <Input placeholder="categoryType" />
+        <Select onValueChange={(e) => setCategoryId(e)}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories?.map((item, index) => {
+              return (
+                <SelectItem key={index} value={item.id}>
+                  {" "}
+                  {item.categoryType}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
       </div>
       <div>
-        <Button>Create</Button>
+        <Checkbox onCheckedChange={(e) => setDelivery(Boolean(e))} />
+      </div>
+      <div>
+        <Button onClick={createProduct}>Create</Button>
       </div>
     </div>
   );

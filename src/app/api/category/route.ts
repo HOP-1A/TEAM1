@@ -17,3 +17,13 @@ export const POST = async(req:Request)=>{
         NextResponse.json({error:err})
     }
 }
+
+
+export const GET = async()=>{
+    try{
+        const getCategories = await prisma.category.findMany();
+        return NextResponse.json(getCategories)
+    }catch(err){
+        return NextResponse.json({error:err})
+    }
+}
