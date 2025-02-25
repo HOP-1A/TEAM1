@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 
 const formSchema = z.object({
@@ -25,11 +26,12 @@ const formSchema = z.object({
 
 const handleRequest = (items: z.infer<typeof formSchema>) => {
     console.log(items);
-    /*
-    REQUEST TO SERVER
-    */
+    localStorage.setItem('temp-number', items.phoneNumber);
+    localStorage.setItem('remind-phone', JSON.stringify(items.remindPhone));
 }
 export default function Home() {
+    const [formIsValid, setFormIsValid] = useState(true);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -37,6 +39,13 @@ export default function Home() {
             remindPhone: false
         }
     })
+
+    const { formState: { isValid } } = form;
+
+    useEffect(() => {
+        setFormIsValid(!isValid);
+    }, [isValid]);
+
     return (
         <div className="h-screen flex flex-col justify-between items-center">
             <div>
@@ -92,7 +101,19 @@ export default function Home() {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" className="bg-[#ff3467] py-6">Нэвтрэх</Button>
+                            <Button type="submit" disabled={formIsValid}
+                                className={`py-6 shadow-none 
+                                    ${formIsValid ? "bg-[#EEEFF2] hover:bg-[#EEEFF2]" :
+                                        "bg-[#ff3467] hover:bg-[#ff3467]"}`}>
+                                <Link
+                                    href={{
+                                        pathname: '/auth/pass',
+                                    }}
+                                    className={`text-sm font-semibold ${formIsValid ? "text-[#BBBECD]" : "text-white"}`}>
+                                    Нэвтрэх
+                                </Link>
+                            </Button>
+
                         </div>
                         <div className="flex justify-between items-center my-8">
                             <div className="flex-1">
@@ -107,7 +128,7 @@ export default function Home() {
                         </div>
                         <div className="flex flex-col items-center gap-6 justify-center">
                             <div>
-                                <Button className="bg-[#cdcdcf] hover:bg-[#c1c1c3] px-40 py-6 text-gray-600 font-semibold shadow-none">
+                                <Button className="bg-[#EEEFF2] hover:bg-[#e7e7ea] px-40 py-6 text-gray-600 font-semibold shadow-none">
                                     <Link
                                         href={{
                                             pathname: '/register',
@@ -119,14 +140,14 @@ export default function Home() {
                             <div>
                                 <p className="text-center text-sm space-x-1">
                                     <span>Утасны дугаараа оруулан нэвтрэх эсвэл бүртгүүлэх товчийг дарж zary.mn
-                                    вебсайтад нэвтэрснээр таныг тус вебсайтын </span>
+                                        вебсайтад нэвтэрснээр таныг тус вебсайтын </span>
                                     <Link
                                         href={{
                                             pathname: '/terms',
                                         }}
                                         className="text-[#ff3467]"
-                                        >
-                                         үйлчилгээний нөхцөл
+                                    >
+                                        үйлчилгээний нөхцөл
                                     </Link>
                                     <span>болон</span>
                                     <Link
@@ -134,8 +155,8 @@ export default function Home() {
                                             pathname: '/policy',
                                         }}
                                         className="text-[#ff3467]"
-                                        >
-                                    нууцлалын бодлогыг  
+                                    >
+                                        нууцлалын бодлогыг
                                     </Link>
                                     <span>
                                         хүлээн зөвшөөрсөнд тооцно.

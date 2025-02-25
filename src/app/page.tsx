@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-export default function Home() {
-  return <div>conflict haruuly</div>;
-}
-=======
 "use client";
 
 import { prisma } from "@/lib/prisma";
@@ -93,4 +88,3 @@ const Page = () => {
 };
 
 export default Page;
->>>>>>> Stashed changes
