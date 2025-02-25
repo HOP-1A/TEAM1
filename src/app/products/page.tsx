@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const Page = async () => {
   const categories = await prisma.category.findMany();
@@ -54,7 +55,24 @@ const Page = async () => {
         <div className="flex">
           <div className="w-[700px] pr-6">
             <div>
-              <img className="w-[660px] h-full" src={selectProductImg} alt="" />
+              <Dialog>
+                <DialogTrigger asChild>
+                  <img
+                    className="w-[660px] h-full"
+                    src={selectProductImg}
+                    alt="uploaded"
+                    onClick={() => setSelectedProductImg(selectProductImg)}
+                  />
+                </DialogTrigger>
+                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
+                  <DialogTitle className="text-white"></DialogTitle>
+                  <img
+                    src={selectProductImg}
+                    alt="preview"
+                    className="w-full h-auto "
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
 
             <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10 duration-300 ease-in-out">
