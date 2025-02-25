@@ -4,7 +4,12 @@ import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
-
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 const Page = () => {
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
@@ -13,7 +18,7 @@ const Page = () => {
   ];
 
   const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
-
+  const [selectedImage, setSelectedImage] = useState("");
   return (
     <div className="w-screen flex justify-center mt-52">
       <div className="w-[1200px] font-medium font-sans ">
@@ -34,7 +39,24 @@ const Page = () => {
         <div className="flex">
           <div className="w-[700px] pr-6">
             <div>
-              <img className="w-[660px] h-full" src={selectProductImg} alt="" />
+              <Dialog>
+                <DialogTrigger asChild>
+                  <img
+                    className="w-[660px] h-full"
+                    src={selectProductImg}
+                    alt="uploaded"
+                    onClick={() => setSelectedImage(selectProductImg)}
+                  />
+                </DialogTrigger>
+                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
+                  <DialogTitle className="text-white"></DialogTitle>
+                  <img
+                    src={selectProductImg}
+                    alt="preview"
+                    className="w-full h-auto "
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
 
             <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10">
