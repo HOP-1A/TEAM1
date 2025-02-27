@@ -32,7 +32,7 @@ const Page = () => {
             <div className="mr-2 ml-2 font-medium">
               <div className="text-sm font-medium">Nike Adults Dunk</div>
               <div className="flex justify-between mt-8">
-                <div className="font-semibold ">369,000 ₮</div>
+                <div className="font-semibold text-base">369,000 ₮</div>
                 <Heart className="w-5" />
               </div>
             </div>
