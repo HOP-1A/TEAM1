@@ -1,12 +1,10 @@
 {
-  "name": "team-1",
-  "version": "0.1.0",
-  "private": true,
+  "name": "team1",
+  "version": "1.0.0",
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
@@ -40,4 +38,7 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
+=======
+  "author": "",
+  "license": "ISC"
 }
