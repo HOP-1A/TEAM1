@@ -11,7 +11,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import Link from 'next/link'
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -21,8 +20,9 @@ const formSchema = z.object({
     phoneNumber: z.string().regex(/^\d{8}$/gi, {
         message: "must be a valid phone number."
     }),
-    password: z.string().optional(),
-    remindPhone: z.boolean().default(false).optional()
+    password: z.string().min(4, {
+        message: "Хамгийн багадаа 4 орон байна."
+    }),
 })
 
 const handleRequest = (items: z.infer<typeof formSchema>) => {
@@ -35,12 +35,16 @@ export default function Home() {
     const [formIsValid, setFormIsValid] = useState(true);
     const [phoneNumber, setPhoneNumber] = useState<string>();
 
+    useEffect(() => {
+        setPhoneNumber(localStorage.getItem("temp-number") ?? '');
+        console.log(phoneNumber, "ma");
+    }, []);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            phoneNumber: phoneNumber,
+            phoneNumber:  phoneNumber || "",
             password: "",
-            remindPhone: false
         }
     })
 
@@ -48,13 +52,9 @@ export default function Home() {
 
     useEffect(() => {
         setFormIsValid(!isValid);
+        console.log("ca");
+        
     }, [isValid]);
-
-    useEffect(() => {
-        setPhoneNumber(localStorage.getItem("temp-number") ?? '');
-        console.log(phoneNumber);
-
-    }, []);
 
     return (
         <div className="h-screen flex flex-col justify-between items-center">
@@ -79,7 +79,7 @@ export default function Home() {
                                         <FormLabel className="ml-1 text-[#888a99] text-sm">Утасны дугаар</FormLabel>
                                         <FormControl>
                                             {/* <Input {...field} onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} /> */}
-                                            <Input {...field} defaultValue={phoneNumber} />
+                                            <Input {...field} defaultValue={phoneNumber}/>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -94,7 +94,7 @@ export default function Home() {
                                         <FormLabel className="ml-1 text-[#888a99] text-sm">password</FormLabel>
                                         <FormControl>
                                             {/* <Input {...field} onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} /> */}
-                                            <Input {...field} defaultValue={phoneNumber} />
+                                            <Input {...field}/>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -110,6 +110,27 @@ export default function Home() {
                                     }}
                                     className={`text-sm font-semibold ${formIsValid ? "text-[#BBBECD]" : "text-white"}`}>
                                     Нэвтрэх
+                                </Link>
+                            </Button>
+                            <div className="flex justify-between items-center my-8">
+                                <div className="flex-1">
+                                    <hr className="border-t-3 border-[#888a99]" />
+                                </div>
+                                <div className="mx-2 text-[#888a99] font-semibold text-sm">
+                                    эсвэл
+                                </div>
+                                <div className="flex-1">
+                                    <hr className="border-t-3 border-[#888a99]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <Button className="bg-[#EEEFF2] hover:bg-[#e7e7ea] px-40 py-6 text-gray-600 font-semibold shadow-none">
+                                <Link
+                                    href={{
+                                        pathname: '/register',
+                                    }}>
+                                    Бүхтгүүлэх
                                 </Link>
                             </Button>
                         </div>
