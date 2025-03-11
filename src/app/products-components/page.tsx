@@ -13,7 +13,6 @@ const Page = () => {
       <div className="w-[1200px]">
         <div className="flex justify-between mb-4">
           <div className="text-lg font-bold">Шинээр нэмэгдсэн бараа</div>
-          <div className="text-gray-600">Бүгдийг үзэх</div>
         </div>
 
         <div className="flex gap-x-10 gap-y-8 flex-wrap">
@@ -37,6 +36,10 @@ const Page = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="flex justify-end mb-4">
+          <div className="text-gray-600">Бүгдийг үзэх</div>
         </div>
       </div>
     </div>
