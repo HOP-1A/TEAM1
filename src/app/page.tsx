@@ -1,11 +1,9 @@
-import NavBar from "../components/ui/navigationBar/NavBar";
-
-export default function Home() {
-  return (
+const Page = () => {
+    return(
     <>
-    <NavBar />
+        Home
     </>
-  );
+   )
 }
- 
- 
+
+export default Page;
