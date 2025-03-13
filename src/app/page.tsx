@@ -1,3 +1,4 @@
+
 import NavBar from "../components/ui/navigationBar/NavBar";
 import TabBar from "../components/ui/multipleTabBar/tabBar"
 
@@ -22,4 +23,3 @@ export default function Home() {
       </div>
     </>
   );
-}

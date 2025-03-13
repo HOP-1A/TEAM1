@@ -1,3 +1,4 @@
+
 'use client'
 
 import {
@@ -144,3 +145,4 @@ export default function NavBar() {
     </>
   );
 }
+
