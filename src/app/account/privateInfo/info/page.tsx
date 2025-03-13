@@ -34,9 +34,49 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const Page = () => {
   const [date, setDate] = React.useState<Date>();
+  const [privateInfoActive, setPrivateInfoActive] = useState(true);
+  const [contactActive, setContactActive] = useState(false);
+  const [passwordActive, setPasswordActive] = useState(false);
+  const [info, setInfo] = useState(true);
+  const [product, setProduct] = useState(false);
+  const [order, setOrder] = useState(false);
+
+  const myInfo = () => {
+    setInfo(true);
+    setProduct(false);
+    setOrder(false);
+  };
+  const myProduct = () => {
+    setInfo(false);
+    setProduct(true);
+    setOrder(false);
+  };
+  const myOrder = () => {
+    setInfo(false);
+    setProduct(false);
+    setOrder(true);
+  };
+
+  const privateInfo = () => {
+    setPrivateInfoActive(true);
+    setContactActive(false);
+    setPasswordActive(false);
+  };
+  const contactInfo = () => {
+    setPrivateInfoActive(false);
+    setContactActive(true);
+    setPasswordActive(false);
+  };
+  const passwordInfo = () => {
+    setPrivateInfoActive(false);
+    setContactActive(false);
+    setPasswordActive(true);
+  };
+
   return (
     <div className="flex justify-center mt-[20px]">
       <div className="border-[1px] border-gray-200 rounded-[16px] h-[281px] w-[280px]">
@@ -52,23 +92,53 @@ const Page = () => {
           </div>
         </div>
         <div>
-          <div className="flex py-[10px] px-[20px] gap-[20px] hover:cursor-pointer transition-colors duration-500 ease-in-out hover:bg-gray-100">
-            <div>
-              <Settings color="red" />
+          <div className="flex">
+            <div
+              onClick={myInfo}
+              className={`flex py-[10px] px-[20px] h-[42px] w-[280px] items-center gap-[20px] hover:cursor-pointer transition-colors ${
+                info ? "bg-gray-100" : "bg-white"
+              } duration-500 ease-in-out hover:bg-gray-100`}
+            >
+              <div>
+                <Settings color="red" />
+              </div>
+              <div>Хувийн мэдээлэл</div>
             </div>
-            <div>Хувийн мэдээлэл</div>
+            {info ? (
+              <div className="w-[4px] h-[42px] bg-red-600 float-right"></div>
+            ) : null}
           </div>
-          <div className="flex py-[10px] px-[20px] gap-[20px] hover:cursor-pointer transition-colors duration-500 ease-in-out hover:bg-gray-100">
-            <div>
-              <Megaphone color="red" />
+          <div className="flex">
+            <div
+              onClick={myProduct}
+              className={`flex py-[10px] px-[20px] h-[42px] w-[280px] gap-[20px] hover:cursor-pointer transition-colors ${
+                product ? "bg-gray-100" : "bg-white"
+              } duration-500 ease-in-out hover:bg-gray-100`}
+            >
+              <div>
+                <Megaphone color="red" />
+              </div>
+              <div>Миний зар</div>
             </div>
-            <div>Миний зар</div>
+            {product ? (
+              <div className="w-[4px] h-[42px] bg-red-600 float-right"></div>
+            ) : null}
           </div>
-          <div className="flex py-[10px] px-[20px] gap-[20px] hover:cursor-pointer transition-colors duration-500 ease-in-out hover:bg-gray-100">
-            <div>
-              <File color="red" />
+          <div className="flex">
+            <div
+              onClick={myOrder}
+              className={`flex py-[10px] px-[20px] h-[42px] w-[280px] gap-[20px] hover:cursor-pointer transition-colors ${
+                order ? "bg-gray-100" : "bg-white"
+              } duration-500 ease-in-out hover:bg-gray-100`}
+            >
+              <div>
+                <File color="red" />
+              </div>
+              <div>Миний захиалгууд</div>
             </div>
-            <div>Миний захиалгууд</div>
+            {order ? (
+              <div className="w-[4px] h-[42px] bg-red-600 float-right"></div>
+            ) : null}
           </div>
           <div className="flex py-[10px] px-[20px] gap-[20px] hover:cursor-pointer transition-colors duration-500 ease-in-out hover:bg-gray-100">
             <div>
@@ -84,17 +154,38 @@ const Page = () => {
         <div>
           <div className="flex gap-[15px] h-[28px] w-[313px]">
             <div>
-              <Button className="w-[80px] h-[28px] text-[12px] px-[12px] rounded-[8px] bg-gray-200 text-gray-800 hover:cursor-pointer">
+              <Button
+                onClick={privateInfo}
+                className={`w-[80px] h-[28px] text-[12px] px-[12px] rounded-[8px] ${
+                  privateInfoActive
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-200 text-gray-800"
+                } hover:cursor-pointer hover:bg-opacity-100`}
+              >
                 Мэдээлэл
               </Button>
             </div>
             <div>
-              <Button className="w-[142px] h-[28px] text-[12px] px-[12px] rounded-[8px] bg-gray-200 text-gray-800 hover:cursor-pointer">
+              <Button
+                onClick={contactInfo}
+                className={`w-[142px] h-[28px] text-[12px] px-[12px] rounded-[8px] ${
+                  contactActive
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-200 text-gray-800"
+                } hover:cursor-pointer hover:bg-opacity-100`}
+              >
                 Холбогдох мэдээлэл
               </Button>
             </div>
             <div>
-              <Button className="w-[68px] h-[28px] text-[12px] px-[12px] rounded-[8px] bg-gray-200 text-gray-800 hover:cursor-pointer">
+              <Button
+                onClick={passwordInfo}
+                className={`w-[68px] h-[28px] text-[12px] px-[12px] rounded-[8px] ${
+                  passwordActive
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-200 text-gray-800"
+                } hover:cursor-pointer hover:bg-opacity-100`}
+              >
                 Нууц үг
               </Button>
             </div>
@@ -177,7 +268,6 @@ const Page = () => {
                       </SelectTrigger>
                       <SelectContent className="bg-white">
                         <SelectGroup>
-                          <SelectLabel>Сонгох</SelectLabel>
                           <SelectItem value="Эмэгтэй">Эмэгтэй</SelectItem>
                           <SelectItem value="Эрэгтэй">Эрэгтэй</SelectItem>
                         </SelectGroup>
@@ -197,7 +287,7 @@ const Page = () => {
               </div>
             </div>
             <div className="w-[844px] h-[46px] justify-end">
-              <Button className="w-[220px] h-[46px] bg-red-600 px-[24px] py-[8px] rounded-[8px] text-[16px] text-white float-right">
+              <Button className="w-[220px] h-[46px] bg-red-600 px-[24px] py-[8px] rounded-[8px] text-[16px] hover:bg-opacity-100 text-white float-right">
                 Хадгалах
               </Button>
             </div>
