@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { Nunito } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -22,14 +24,15 @@ const nunito = Nunito({
 });
 
 export default function NavBar() {
-
+  
   function popUp(){
     console.log("Opens a div")
   } 
   
+  const router = useRouter()
   return (
     <>
-      <div id="headerDesktop" className="fixed w-full">
+      <div id="headerDesktop" className="sticky top-0 w-full bg-white">
         <div id="headerTallest" className="flex relative  ">
           <div
             id="headerContainer"
@@ -40,7 +43,7 @@ export default function NavBar() {
               className="flex items-center justify-between max-w-[1200px] min-w-[1184px] h-[94px] "
             >
               <div id="zaryFont" className="flex ">
-                <ShoppingBag className="h-16 w-16 ml-8 stroke-black" />
+                <ShoppingBag className="h-16 w-16 ml-8 stroke-black cursor-pointer" type="button" onClick={() => router.push('/')}/>
               </div>
               {/* Search tab Search Tab Search Tab */}
               <div
@@ -53,7 +56,7 @@ export default function NavBar() {
                 >
                   <button className="flex w-[136px]" onClick={popUp}>Бүх ангилал</button>
                   <button>
-                    <ChevronDown className="w-[14px] h-[14px] " />
+                    <ChevronDown className="w-[14px] h-[14px] " />        
                   </button>
                 </div>
                 <span className="flex h-[40px] rounded-md pl-[10px] ">
