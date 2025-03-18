@@ -4,10 +4,11 @@
   "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
   "main": "index.js",
   "dependencies": {
+    "@clerk/nextjs": "^6.12.5",
     "@prisma/client": "^6.3.1",
-    "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-popover": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-toggle": "^1.1.2",
     "@radix-ui/react-toggle-group": "^1.1.2",
     "bcrypt": "^5.1.1",
@@ -16,12 +17,12 @@
     "date-fns": "^3.6.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "next": "^15.1.7",
     "prisma": "^6.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind": "^4.0.0",
     "tailwind-merge": "^3.0.1",
+    "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
@@ -45,3 +46,4 @@
   "author": "",
   "license": "ISC"
 }
+
