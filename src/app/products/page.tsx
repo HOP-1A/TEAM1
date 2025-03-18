@@ -1,3 +1,5 @@
+"use client"
+
 import { prisma } from "@/lib/prisma";
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";

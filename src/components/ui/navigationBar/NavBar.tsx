@@ -18,6 +18,8 @@ import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
 
+import TabBar from "../multipleTabBar/TabBar"
+
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -148,7 +150,7 @@ export default function NavBar() {
                   </div>
                   Ангилал
                 </button>
-                <div>Дэлгүүр</div>
+                <Link href="/users">Users</Link>
                 <div>Бараа бүтээгдэхүүнүүд</div>
                 <div>Хэрэглэгчийн тусламж</div>
               </div>
@@ -161,6 +163,7 @@ export default function NavBar() {
               </div>
             </div>
           </div>
+          <TabBar />
         </div>
       </>
     );
