@@ -22,6 +22,8 @@ model Users {
   updatedAt   DateTime  @updatedAt
   createdAt   DateTime  @default(now())
   Product     Product[]
+
+  LikedProduct LikedProduct[]
 }
 
 model Product {
@@ -38,6 +40,17 @@ model Product {
   createdAt   DateTime @default(now())
   usersId     String
   categoryId  String
+
+  LikedProduct LikedProduct[]
+}
+
+
+model LikedProduct {
+  id          String   @id @default(uuid())
+  userId      String
+  productId   String
+  user      Users    @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Category {
