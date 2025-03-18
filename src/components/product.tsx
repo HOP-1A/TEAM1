@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const Page = () => {
+const Product = () => {
   const router = useRouter();
   const redirect = () => {
     router.push(`products`);
@@ -46,4 +46,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Product;
