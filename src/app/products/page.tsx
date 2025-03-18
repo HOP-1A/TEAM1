@@ -1,10 +1,17 @@
+"use client";
+
 import { prisma } from "@/lib/prisma";
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Page = async () => {
   const categories = await prisma.category.findMany();
@@ -37,7 +44,7 @@ const Page = async () => {
 
   return (
     <div className="w-screen flex justify-center mt-52">
-      <div className="w-[1200px] font-medium font-sans ">
+      <div className="w-[1200px] font-medium font-sans">
         <div className="flex justify-between border-b-2 pb-5 mb-6 text-sm">
           <div className="">Нийтэлсэн огноо:2025/02/11 12:16</div>
           <div className="flex">
