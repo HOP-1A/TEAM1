@@ -21,11 +21,11 @@ const Page = () => {
   ];
 
   const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [pieces, setPieces] = useState("");
   const [number, setNumber] = useState(1);
 
   const pluss = () => {
-    if (number == selectedCategory) {
+    if (number == pieces) {
     } else {
       const plus = number + 1;
       setNumber(plus);
