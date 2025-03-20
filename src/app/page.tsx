@@ -1,6 +1,7 @@
-import Category from "@/components/ui/navigationBar/Category";
+import Category from "@/app/_components/Category";
 import NavBar from "../components/ui/navigationBar/NavBar";
-import Product from "@/components/ui/navigationBar/Product";
+import Product from "@/app/_components/Product";
+import Footer from "./_components/Footer";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <NavBar />
       <Category />
       <Product />
+      <Footer />
     </>
   );
 }
