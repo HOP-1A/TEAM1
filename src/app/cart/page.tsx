@@ -1,4 +1,3 @@
-import NavBar from "@/components/ui/navigationBar/NavBar";
 import { X } from "lucide-react";
 
 const Page = () => {
