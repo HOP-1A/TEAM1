@@ -24,11 +24,11 @@ export const POST = async (req: Request) => {
   }
 };
 
-// export const GET = async () => {
-//   try {
-//     const product = await prisma.product.findMany();
-//     return NextResponse.json(product);
-//   } catch (err) {
-//     return NextResponse.json(err);
-//   }
-// };
+export const GET = async () => {
+  try {
+    const product = await prisma.product.findMany();
+    return NextResponse.json(product);
+  } catch (err) {
+    return NextResponse.json(err);
+  }
+};
