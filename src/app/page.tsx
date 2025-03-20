@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
-=======
 "use client";
 
->>>>>>> Stashed changes
 import NavBar from "../components/ui/navigationBar/NavBar";
 import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -55,8 +50,6 @@ export default function Home() {
   return (
     <>
       <NavBar />
-<<<<<<< Updated upstream
-=======
       <div className="flex flex-col justify-center items-center">
         <div className="max-w-[90vw] flex justify-between mt-64">
           <img
@@ -106,7 +99,6 @@ export default function Home() {
           ))}
         </div>
       </div>
->>>>>>> Stashed changes
     </>
   );
 }
