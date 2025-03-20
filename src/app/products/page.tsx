@@ -1,14 +1,20 @@
+"use client";
+
 import { prisma } from "@/lib/prisma";
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-const Page = async () => {
-  const categories = await prisma.category.findMany();
-  console.log(categories);
+const Page = () => {
+  // const categories = await prisma.category.findMany();
+
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
     "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
@@ -16,11 +22,11 @@ const Page = async () => {
   ];
 
   const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [pieces, setPieces] = useState("");
   const [number, setNumber] = useState(1);
 
   const pluss = () => {
-    if (number == selectedCategory) {
+    if (number == pieces) {
     } else {
       const plus = number + 1;
       setNumber(plus);
@@ -83,6 +89,7 @@ const Page = async () => {
                     className="border-white hover:border-rose-500 border-2"
                     src={productImg}
                     alt=""
+                    onClick={() => setSelectedProductImg(productImg)}
                   />
                 );
               })}
@@ -96,81 +103,18 @@ const Page = async () => {
             <div className="text-4xl mb-3">Nike dunk low white/black </div>
             <div className="text-4xl mb-7">369,000 ₮</div>
 
-            <div className="mb-7">
-              <div className="mb-2">Гутлын размер:</div>
+            <div className="flex gap-2">
+              <div className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400">
+                Сагслах
+              </div>
 
-              <div className="flex">
-                <ToggleGroup type="single" className="space-x-2">
-                  <ToggleGroupItem
-                    className="bg-gray-200 hover:bg-rose-500 hover:text-white"
-                    onClick={() => {
-                      setSelectedCategory("");
-                      setSelectedCategory("10");
-                      setNumber(1);
-                    }}
-                    value="bold"
-                    aria-label="Toggle bold"
-                  >
-                    <button>40</button>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem
-                    className="bg-gray-200 hover:bg-rose-500 hover:text-white"
-                    onClick={() => {
-                      setSelectedCategory("");
-                      setSelectedCategory("4");
-                      setNumber(1);
-                    }}
-                    value="italic"
-                    aria-label="Toggle italic"
-                  >
-                    <button>41</button>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem
-                    className="bg-gray-200 hover:bg-rose-500 hover:text-white"
-                    value="strikethrough"
-                    aria-label="Toggle strikethrough"
-                    onClick={() => {
-                      setSelectedCategory("");
-                      setSelectedCategory("3");
-                      setNumber(1);
-                    }}
-                  >
-                    <button>42</button>
-                  </ToggleGroupItem>
-                </ToggleGroup>
+              <div className="flex justify-center items-center w-[245px] h-[50px] rounded-lg bg-rose-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-rose-400">
+                Худалдан авах
               </div>
             </div>
 
-            {selectedCategory === "" ? null : (
-              <div>
-                <div>
-                  <div>Тоо ширхэг</div>
-
-                  <div className="flex gap-3">
-                    <button
-                      className="w-7 h-7 bg-gray-200 rounded-md"
-                      onClick={() => miness()}
-                    >
-                      -
-                    </button>
-                    <div>{number}</div>
-                    <button
-                      className="w-7 h-7 bg-gray-200 rounded-md"
-                      onClick={() => pluss()}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="flex text-sm">
-                    <div>Боломжит үлдэгдэл: </div>
-                    <div className="flex gap-3">{selectedCategory}</div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             <div className="text-2xl mb-3 mt-5">Хүргэлттэй</div>
-            <div className="flex items-center w-[500px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2">
+            <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
               <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
                 <Truck className="w-5" />
               </div>
