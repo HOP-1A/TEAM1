@@ -6,11 +6,16 @@ import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Page = () => {
   // const categories = await prisma.category.findMany();
-  // console.log(categories);
+
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
     "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
