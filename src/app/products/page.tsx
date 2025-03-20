@@ -1,5 +1,4 @@
 "use client";
-
 import { prisma } from "@/lib/prisma";
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
@@ -13,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 
 const Page = () => {
-  // const categories = await prisma.category.findMany();
   const productImgs = [
     "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
     "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
