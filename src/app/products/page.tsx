@@ -5,7 +5,6 @@ import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { useState } from "react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Dialog,
   DialogContent,
