@@ -216,9 +216,9 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[844px] h-[46px] justify-end">
-              <Button className="w-[220px] h-[46px] bg-gray-300 px-[24px] py-[8px] rounded-[8px] text-[16px] transition-colors duration-500 ease-in-out hover:bg-gray-200 float-right">
-                Бүртгэл устгах
+            <div className="w-[844px] h-[46px] justify-end px-[8px]">
+              <Button className="w-[220px] h-[46px] bg-red-600 text-white px-[24px] py-[8px] rounded-[8px] text-[16px] transition-colors duration-500 ease-in-out hover:bg-gray-200 hover:text-black">
+                Хадгалах
               </Button>
             </div>
           </div>
