@@ -7,8 +7,10 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-type Listings = {
+export type Listings = {
   id: string;
   categoryId: string;
   createdAt: string;
@@ -22,8 +24,37 @@ type Listings = {
   usersId: string;
 };
 
+type CartItem = {
+  id: string;
+  quantity: number;
+};
+
 export default function Home() {
   const [listings, setListings] = useState<Listings[]>([]);
+  const addToCart = (item: Listings) => {
+    const id = item.id;
+
+    const stringifiedCart = localStorage.getItem("cart");
+    const cart: CartItem[] = JSON.parse(stringifiedCart || "[]");
+
+    let coincidedIndex: undefined | number = undefined;
+    cart.map((cartItem, i) => {
+      if (cartItem.id === id) {
+        coincidedIndex = i;
+      }
+    });
+
+    if (coincidedIndex === undefined) {
+      cart.push({
+        ...item,
+        quantity: 1,
+      });
+    } else {
+      cart[coincidedIndex].quantity = cart[coincidedIndex].quantity + 1;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
 
   const getProduct = async () => {
     try {
@@ -33,7 +64,6 @@ export default function Home() {
       });
 
       const data = await resJSON.json();
-      console.log("Fetched Data:", data);
 
       if (Array.isArray(data)) {
         setListings(data);
@@ -86,13 +116,19 @@ export default function Home() {
                 </CarouselContent>
               </Carousel>
 
-              <CardContent className="p-4 bg-white">
+              <CardContent className="p-4 bg-white space-x-2">
                 <h3 className="text-lg font-semibold text-gray-900">
                   {item.name}
                 </h3>
                 <p className="text-gray-600">{item.price}₮</p>
-                <Button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <Button className="mt-4 w-[200px] py-2 bg-rose-500 text-white rounded-lg hover:bg-blue-700">
                   Дэлгэрэнгүй
+                </Button>
+                <Button
+                  onClick={() => addToCart(item)}
+                  className="w-[200px] py-2 bg-rose-500 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Сагслах
                 </Button>
               </CardContent>
             </Card>
