@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export type Listings = {
   id: string;
@@ -22,6 +23,7 @@ export type Listings = {
   quantity: string;
   updatedAt: string;
   usersId: string;
+  delivery: boolean;
 };
 
 type CartItem = {
@@ -56,6 +58,7 @@ export default function Home() {
     localStorage.setItem("cart", JSON.stringify(cart));
   };
 
+  const router = useRouter();
   const getProduct = async () => {
     try {
       const resJSON = await fetch("/api/product", {
@@ -104,7 +107,7 @@ export default function Home() {
             >
               <Carousel>
                 <CarouselContent>
-                  {item.productImg.map((image, index) => (
+                  {item.productImg?.map((image, index) => (
                     <CarouselItem key={index}>
                       <img
                         src={image}
@@ -121,7 +124,10 @@ export default function Home() {
                   {item.name}
                 </h3>
                 <p className="text-gray-600">{item.price}₮</p>
-                <Button className="mt-4 w-[200px] py-2 bg-rose-500 text-white rounded-lg hover:bg-blue-700">
+                <Button
+                  className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  onClick={() => router.push(`/products/${item.id}`)}
+                >
                   Дэлгэрэнгүй
                 </Button>
                 <Button
