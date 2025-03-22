@@ -128,7 +128,7 @@ const Page = () => {
       </div>
       <div className="w-[847px] h-[920px] px-[13px] py-[16px]">
         <div className="text-[18px]">Хувийн мэдээлэл</div>
-        <hr className="mt-[16px] mb-[16px]" />
+        <hr className="mt-[16px] mb-[16px] w-[894px]" />
         <div>
           <div className="flex gap-[15px] h-[28px] w-[313px]">
             <div>
