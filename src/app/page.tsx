@@ -18,7 +18,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { list } from "postcss";
 
 export type Listings = {
   id: string;
@@ -35,7 +34,7 @@ export type Listings = {
   delivery: boolean;
 };
 
-type CartItem = {
+export type CartItem = {
   id: string;
   quantity: number;
 };
