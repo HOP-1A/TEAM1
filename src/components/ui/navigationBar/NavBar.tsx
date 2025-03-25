@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ChevronDown,
   Heart,
@@ -10,7 +12,7 @@ import {
   Search,
   Twitter,
 } from "lucide-react";
- 
+
 import {
   ClerkProvider,
   SignInButton,
@@ -19,19 +21,26 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
- 
+
 import { Nunito } from "next/font/google";
 import Link from "next/link";
- 
+import { useRouter } from "next/navigation";
+import Page from "@/app/checkout/page";
+import Home from "@/app/page";
+
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
- 
+
 export default function NavBar() {
+  const router = useRouter();
+  const redirect = () => {
+    router.push(`/`);
+  };
   return (
     <ClerkProvider>
-      <div id="headerDesktop" className="fixed w-full bg-[white]">
+      <div id="headerDesktop" className="fixed w-full bg-[white] z-40">
         <div
           id="tallerTallest"
           className={`${nunito.className} bg-rose-500 h-[28px]`}
@@ -43,7 +52,7 @@ export default function NavBar() {
             <span className="text-white text-[14px] font-bold">
               Хүссэнээ зар, Хайснаа ол
             </span>
- 
+
             <div id="divMenu" className="flex text-[12px]">
               <button
                 id="menuPhone"
@@ -52,7 +61,7 @@ export default function NavBar() {
                 <Phone className="fill-white stroke-rose-500 w-[17px] h-[17px]" />
                 <span className="pl-[12px] text-white">4444-4444</span>
               </button>
- 
+
               <div className="flex place-items-center text-white">
                 <Link
                   id="facebook"
@@ -126,7 +135,7 @@ export default function NavBar() {
             </div>
           </div>
         </div>
- 
+
         <div id="headerTallest" className="flex relative  ">
           <div
             id="headerContainer"
@@ -140,6 +149,7 @@ export default function NavBar() {
                 <img
                   src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
                   className="w-[96px h-[43px]"
+                  onClick={() => redirect()}
                 ></img>
               </div>
               {/* Search tab Search Tab Search Tab */}
@@ -207,12 +217,12 @@ export default function NavBar() {
                     </g>
                   </svg>
                 </button>
-                <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-[40px]">
+                <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
                   <SignedOut>
                     <SignInButton />
                   </SignedOut>
                 </header>
-                <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-[40px]">
+                <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
                   <SignedOut>
                     <UserButton />
                     <SignUpButton />
@@ -281,4 +291,3 @@ export default function NavBar() {
     </ClerkProvider>
   );
 }
- 

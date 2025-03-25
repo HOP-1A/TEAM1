@@ -1,7 +1,7 @@
 const Page = () => {
   return (
-    <div className="w-screen flex justify-center mt-52">
-      <div className="flex w-[1200px] font-medium font-sans gap-3">
+    <div className="w-screen flex justify-center">
+      <div className="flex w-[1200px] font-medium font-sans gap-3 mt-60">
         <div>
           <div className="text-xl">Миний сагс</div>
           <div className="flex w-[800px] h-40 mt-5 border-2 border-gray-200 rounded-xl p-2 gap-3 justify-between">
