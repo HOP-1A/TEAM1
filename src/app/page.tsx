@@ -99,11 +99,11 @@ export default function Home() {
             className="h-[400px] w-[600px] object-cover rounded-lg shadow-md"
           />
         </div>
-        <div className="w-full max-w-[90vw] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="w-full max-w-[80vw] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {listings.map((item) => (
             <Card
               key={item.id}
-              className="shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+              className="shadow-md rounded-lg rounded-[1vh] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
             >
               <Carousel>
                 <CarouselContent>
@@ -119,20 +119,20 @@ export default function Home() {
                 </CarouselContent>
               </Carousel>
 
-              <CardContent className="p-4 bg-white space-x-2">
-                <h3 className="text-lg font-semibold text-gray-900">
+              <CardContent className="p-4 bg-white space-x-2 ">
+                <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
                   {item.name}
                 </h3>
-                <p className="text-gray-600">{item.price}₮</p>
+                <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
                 <Button
-                  className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
                   onClick={() => router.push(`/products/${item.id}`)}
                 >
                   Дэлгэрэнгүй
                 </Button>
                 <Button
                   onClick={() => addToCart(item)}
-                  className="w-[200px] py-2 bg-rose-500 text-white rounded-lg hover:bg-blue-700"
+                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl "
                 >
                   Сагслах
                 </Button>

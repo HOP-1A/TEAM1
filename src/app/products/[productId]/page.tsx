@@ -150,8 +150,8 @@ const Page = () => {
                   <div className="text-4xl mb-7">{items.price} ₮</div>
 
                   <div className="flex gap-2">
-                    <div className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400">
-                      Сагслахx
+                    <div className="flex justify-center items-center rounded-[1vh] rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400">
+                      Сагслах
                     </div>
                   </div>
 
