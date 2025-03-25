@@ -5,6 +5,17 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
+    console.log({
+      price: body?.price,
+      quantity: body?.quantity,
+      description: body?.description,
+      productImg: body?.productImg,
+      categoryId: body?.categoryId,
+      name: body?.name,
+      delivery: body?.delivery,
+      usersId: body?.usersId,
+    });
+    
     const product = await prisma.product.create({
       data: {
         price: body?.price,
@@ -12,15 +23,18 @@ export const POST = async (req: Request) => {
         description: body?.description,
         productImg: body?.productImg,
         categoryId: body?.categoryId,
-        name: body?.name,
+        name: body?.name, 
         delivery: body?.delivery,
         usersId: body?.usersId,
       },
     });
+    console.log("as");
+    
+    console.log(product);
 
-    return NextResponse.json({ message: product });
-  } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ message: product });;
+  } catch (err) {    
+    return NextResponse.json({ error: err });;
   }
 };
 
