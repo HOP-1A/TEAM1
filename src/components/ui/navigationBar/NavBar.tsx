@@ -25,8 +25,6 @@ import {
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Page from "@/app/checkout/page";
-import Home from "@/app/page";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -92,46 +90,7 @@ export default function NavBar() {
                 >
                   <Instagram id="instagram" className="h-[16px] w-[16px]" />
                 </Link>
-                <Link
-                  id="twitter"
-                  href="shttps://x.com/zarymn"
-                  target="_blank"
-                  rel="no twitter"
-                  className="ml-[20px]"
-                >
-                  <Twitter
-                    strokeWidth={1.5}
-                    fill="white"
-                    height="16px"
-                    width="16px]"
-                  />
-                </Link>
-                <Link
-                  id="linkedIn"
-                  href="https://mn.linkedin.com/company/zary"
-                  target="_blank"
-                  rel="no linkedin"
-                  className="ml-[20px] mr-[20px]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 30 30"
-                    fill="white"
-                  >
-                    <path
-                      d="M24 4H6a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM10.954 22h-2.95v-9.492h2.95V22zM9.449 11.151a1.72 1.72 0 1 1 0-3.44 1.72 1.72
-                      0 0 1 0 3.44zM22.004 22h-2.948v-4.616c0-1.101-.02-2.517-1.533-2.517-1.535 0-1.771 1.199-1.771 2.437V22h-2.948v-9.492h2.83v1.297h.04c.394-.746 1.356-1.533 2.791-1.533
-                       2.987 0 3.539 1.966 3.539 4.522V22z"
-                    />
-                  </svg>
-                </Link>
               </div>
-              <button className="text-white border-r-[1px] border-l-[1px] border-sky-100 leading-1 px-[20px]">
-                Түгээмэл асуулт, хариулт
-              </button>
-              <button className="text-white ml-[20px]">Санал хүсэлт</button>
             </div>
           </div>
         </div>
@@ -182,25 +141,6 @@ export default function NavBar() {
                 id="rightNavigationIcons"
                 className="flex gap-[16px] text-rose-500 "
               >
-                <button className="flex justify-center font-3 bg-slate-100 rounded-full h-[40px] w-[40px]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    className="w-4 px;color:#ff3467"
-                    viewBox="0 0 576 512"
-                  >
-                    <path
-                      d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8
-                    54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0
-                    208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0
-                    105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8
-                    12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"
-                    />
-                  </svg>
-                </button>
-                <button className="bg-slate-200 p-2 rounded-full h-[40px] w-[40px]">
-                  <Heart className="h-4 fill-rose-500" />
-                </button>
                 <button className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-[40px]">
                   <svg
                     viewBox="0 0 15 18"
@@ -276,13 +216,11 @@ export default function NavBar() {
               </button>
               <Link href="/users">Users</Link>
               <div>Бараа бүтээгдэхүүнүүд</div>
-              <div>Хэрэглэгчийн тусламж</div>
             </div>
             <div
               id="headerBelowLinked"
               className={`${nunito.className} flex place-items-center gap-[30px] text-[16px]`}
             >
-              <div className="text-rose-500 font-[700]">Хямдрал %</div>
               <div className="font-[400] text-[16px]">Шинэ бараа</div>
             </div>
           </div>
