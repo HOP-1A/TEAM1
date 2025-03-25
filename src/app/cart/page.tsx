@@ -38,7 +38,7 @@ const Page = () => {
                 <img className="h-[96px] mr-3" src={cartItem.productImg[0]} />
 
                 <div className="flex flex-col">
-                  <div className="text-xl w-fit  w-[350px] truncate">
+                  <div className="text-xl w-fit truncate">
                     title: {cartItem.name}
                   </div>
                   <div className="text-xl w-fit">price: {cartItem.price}</div>
