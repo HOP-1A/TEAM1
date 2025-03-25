@@ -26,7 +26,7 @@ export type Listings = {
   delivery: boolean;
 };
 
-type CartItem = {
+export type CartItem = {
   id: string;
   quantity: number;
 };
@@ -117,7 +117,7 @@ export default function Home() {
 
   useEffect(() => {
     getCategory();
-    getProduct;
+    getProduct();
   }, []);
 
   return (
