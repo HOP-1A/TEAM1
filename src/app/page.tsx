@@ -7,8 +7,8 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
 export type Listings = {
@@ -59,6 +59,7 @@ export default function Home() {
   };
 
   const router = useRouter();
+
   const getProduct = async () => {
     try {
       const resJSON = await fetch("/api/product", {
@@ -76,8 +77,47 @@ export default function Home() {
     }
   };
 
+  const getCategory = async () => {
+    try {
+      const resJSON = await fetch("/api/users", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await resJSON.json();
+      console.log("Fetched Data:", data);
+
+      if (Array.isArray(data)) {
+        setListings(data);
+      }
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
+  };
+
+  const orderItem = async () => {
+    try {
+      const resJSON = await fetch("/api/order", {
+        method: "POST",
+        body: JSON.stringify({
+          userId: "123123123",
+          orders: [
+            { id: "059c83ab-5dd9-4b0e-90b5-b818ecf916b1", quantity: 2 },
+            { id: "192d8c37-8eca-44c5-afb0-43e78d0500a3", quantity: 3 },
+          ],
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await resJSON.json();
+      console.log("created order:", data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    getProduct();
+    getCategory();
+    getProduct;
   }, []);
 
   return (
@@ -103,11 +143,11 @@ export default function Home() {
           {listings.map((item) => (
             <Card
               key={item.id}
-              className="shadow-md rounded-lg rounded-[1vh] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+              className="shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
             >
               <Carousel>
                 <CarouselContent>
-                  {item.productImg?.map((image, index) => (
+                  {item?.productImg?.map((image, index) => (
                     <CarouselItem key={index}>
                       <img
                         src={image}
