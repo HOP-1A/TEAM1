@@ -91,10 +91,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
-    getCategory();
->>>>>>> refs/remotes/origin/95-product-detail-be-integration
     getProduct();
   }, []);
 

@@ -3,10 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/ui/navigationBar/NavBar";
 import { ClerkProvider } from "@clerk/nextjs";
-<<<<<<< HEAD
 import { Toaster } from "@/components/ui/toaster";
-=======
->>>>>>> refs/remotes/origin/95-product-detail-be-integration
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +33,7 @@ export default function RootLayout({
         >
           <NavBar />
           {children}
-<<<<<<< HEAD
           <Toaster />
-=======
->>>>>>> refs/remotes/origin/95-product-detail-be-integration
         </body>
       </html>
     </ClerkProvider>
