@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { nanoid } from "nanoid";
 
 type ProductWithQuantity = {
   id: string;
@@ -18,28 +19,33 @@ type ProductWithQuantity = {
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    console.log(body);
+
+    const totalPrice = calculateTotalPrice(body.orders);
+
     const order = await prisma.order.create({
       data: {
+        id: nanoid(),
         usersId: body.userId,
-        totalPrice: 1000,
+        totalPrice,
       },
     });
-    console.log(order);
-    const products: ProductWithQuantity[] = body.orders;
-    console.log(products);
-    products.map(async (product) => {
-      await prisma.orderItem.create({
-        data: {
-          productId: product.id,
-          quantity: product.quantity,
-          usersId: body.userId,
-          orderId: order.id,
-        },
-      });
-    });
 
-    return NextResponse.json({ message: products });
+    const products: ProductWithQuantity[] = body.orders;
+
+    await Promise.all(
+      products.map((product) =>
+        prisma.orderItem.create({
+          data: {
+            productId: product.id,
+            quantity: product.quantity,
+            usersId: body.userId,
+            orderId: order.id,
+          },
+        })
+      )
+    );
+
+    return NextResponse.json({ message: "Success" });
   } catch (err) {
     return NextResponse.json({ message: err });
   }
@@ -52,4 +58,8 @@ export const GET = async () => {
   } catch (err) {
     return NextResponse.json({ message: err });
   }
+};
+
+const calculateTotalPrice = (products: any[]) => {
+  return products.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
 };
