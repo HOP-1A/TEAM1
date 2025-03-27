@@ -10,8 +10,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useParams } from "next/navigation";
-import { toast } from "sonner";
 import { CartItem } from "@/app/page";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 type Listings = {
   id: string;
   categoryId: string;
@@ -31,6 +32,7 @@ const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
   const { productId } = useParams();
+  const { toast } = useToast();
 
   const getProduct = async () => {
     try {
@@ -69,6 +71,10 @@ const Page = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+
+    toast({
+      title: "Амжилттай сагслагдлаа",
+    });
   };
 
   useEffect(() => {
@@ -143,14 +149,14 @@ const Page = () => {
               </button>
             </div>
 
-            <div className="text-2xl mb-3 mt-5">
-              {listing?.delivery == true ? "Хүргэлттэй" : "Хүргэлтгүй"}
-            </div>
+            <div className="text-2xl mb-3 mt-5">Хүргэлттэй эсэх</div>
             <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
               <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
                 <Truck className="w-5" />
               </div>
-              <div>Хүргэлттэй</div>
+              <div>
+                {listing?.delivery == true ? "Хүргэлттэй" : "Хүргэлтгүй"}
+              </div>
             </div>
           </div>
         </div>

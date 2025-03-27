@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 export type Listings = {
   id: string;
@@ -40,6 +41,8 @@ export type CartItem = {
 };
 
 export default function Home() {
+  const { toast } = useToast();
+
   const [listings, setListings] = useState<Listings[]>([]);
   const addToCart = (item: Listings) => {
     const id = item.id;
@@ -64,6 +67,9 @@ export default function Home() {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    toast({
+      title: "Амжилттай сагслагдлаа",
+    });
   };
 
   const router = useRouter();
@@ -139,26 +145,13 @@ export default function Home() {
                 >
                   Дэлгэрэнгүй
                 </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      onClick={() => addToCart(item)}
-                      className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
-                    >
-                      Сагслах
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="bg-pink-200">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Amjilttai sagslagdlaa.
-                      </AlertDialogTitle>
-                    </AlertDialogHeader>
-                    <AlertDialogAction className="rounded-[2vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl">
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogContent>
-                </AlertDialog>
+
+                <Button
+                  onClick={() => addToCart(item)}
+                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+                >
+                  Сагслах
+                </Button>
               </CardContent>
             </Card>
           ))}
