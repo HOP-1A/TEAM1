@@ -5,6 +5,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +21,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Badge, Clock, Eye } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
 export type Listings = {
   id: string;
@@ -118,40 +122,85 @@ export default function Home() {
           {listings.map((item) => (
             <Card
               key={item.id}
-              className="shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+              className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 rounded-xl hover:border-blue-200"
             >
-              <Carousel>
-                <CarouselContent>
-                  {item?.productImg?.map((image, index) => (
-                    <CarouselItem key={index}>
-                      <img
-                        src={image}
-                        alt={item.name}
-                        className="w-full h-64 object-cover"
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-
-              <CardContent className="p-4 bg-white space-x-2 ">
-                <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
-                  {item.name}
-                </h3>
-                <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
-                <Button
-                  className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
-                  onClick={() => router.push(`/products/${item.id}`)}
+              <div className="relative w-full aspect-square rounded-t-xl overflow-hidden">
+                <Carousel
+                  className="w-full h-auto"
+                  plugins={[
+                    Autoplay({
+                      delay: 5000,
+                      stopOnInteraction: false,
+                    }),
+                  ]}
+                  opts={{
+                    loop: true,
+                    align: "start",
+                  }}
                 >
-                  Дэлгэрэнгүй
-                </Button>
+                  <CarouselContent>
+                    {item.productImg.map((image, index) => (
+                      <CarouselItem key={index} className="w-full h-full">
+                        <img
+                          src={image}
+                          alt={item.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
 
-                <Button
-                  onClick={() => addToCart(item)}
-                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
-                >
-                  Сагслах
-                </Button>
+                  {item.productImg.length > 1 && (
+                    <>
+                      <CarouselPrevious className="left-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 hover:bg-white" />
+                      <CarouselNext className="right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 hover:bg-white" />
+                    </>
+                  )}
+                </Carousel>
+
+                {item.status && (
+                  <Badge
+                    variant="secondary"
+                    className="absolute top-2 left-2 bg-white text-gray-800 border border-gray-300"
+                  >
+                    {item.status}
+                  </Badge>
+                )}
+              </div>
+
+              <CardContent className="p-4 space-y-3">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-lg font-semibold line-clamp-2">
+                    {item.name}
+                  </h3>
+                </div>
+
+                <div className="flex items-center text-sm text-gray-500 space-x-2">
+                  <Clock className="w-4 h-4" />
+                  <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+                </div>
+
+                <div className="flex justify-between items-center pt-2">
+                  <span className="text-blue-600 font-bold text-lg">
+                    {item.price}
+                  </span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      className="border-blue-500 text-blue-600 hover:bg-blue-50"
+                      onClick={() => router.push(`/products/${item.id}`)}
+                    >
+                      Дэлгэрэнгүй
+                    </Button>
+                    <Button
+                      onClick={() => addToCart(item)}
+                      className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+                    >
+                      Сагслах
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}

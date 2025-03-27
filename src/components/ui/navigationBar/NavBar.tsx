@@ -12,6 +12,8 @@ import {
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { CartItem } from "@/app/page";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -20,9 +22,21 @@ const nunito = Nunito({
 
 export default function NavBar() {
   const router = useRouter();
+  const [cart, setCart] = useState<CartItem[]>([]);
+
   const redirect = () => {
     router.push(`/`);
   };
+
+  const countCartItems = () => {
+    const stringCart = localStorage.getItem("cart");
+    const cart = JSON.parse(stringCart || "[]");
+    setCart(cart);
+  };
+
+  useEffect(() => {
+    countCartItems();
+  }, []);
   return (
     <div id="headerDesktop" className="fixed w-full bg-[white] z-40 top-0">
       <div
@@ -165,6 +179,7 @@ export default function NavBar() {
                   </g>
                 </svg>
               </button>
+              <div>{cart?.length}</div>
               <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
                 <SignedOut>
                   <SignInButton />
