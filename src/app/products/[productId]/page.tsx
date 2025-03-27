@@ -10,14 +10,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useParams } from "next/navigation";
-<<<<<<< HEAD
 import { CartItem } from "@/app/page";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-=======
-import { toast } from "sonner";
-import { CartItem } from "@/app/page";
->>>>>>> refs/remotes/origin/95-product-detail-be-integration
 type Listings = {
   id: string;
   categoryId: string;
@@ -37,10 +32,7 @@ const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
   const { productId } = useParams();
-<<<<<<< HEAD
   const { toast } = useToast();
-=======
->>>>>>> refs/remotes/origin/95-product-detail-be-integration
 
   const getProduct = async () => {
     try {
