@@ -163,47 +163,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="w-full max-w-[90vw] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {listings.map((item) => (
-          <Card
-            key={item.id}
-            className="shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
-          >
-            <Carousel>
-              <CarouselContent>
-                {item.productImg?.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <img
-                      src={image}
-                      alt={item.name}
-                      className="w-full h-64 object-cover"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-
-            <CardContent className="p-4 bg-white space-x-2">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {item.name}
-              </h3>
-              <p className="text-gray-600">{item.price}₮</p>
-              <Button
-                className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                onClick={() => router.push(`/products/${item.id}`)}
-              >
-                Дэлгэрэнгүй
-              </Button>
-              <Button
-                onClick={() => addToCart(item)}
-                className="w-[200px] py-2 bg-rose-500 text-white rounded-lg hover:bg-blue-700"
-              >
-                Сагслах
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
     </>
   );
 }
