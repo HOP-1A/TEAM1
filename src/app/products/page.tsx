@@ -23,7 +23,7 @@ const Page = () => {
   const [number, setNumber] = useState(1);
 
   const pluss = () => {
-    if (number == pieces) {
+    if (number == pieces) { // whats up with this
     } else {
       const plus = number + 1;
       setNumber(plus);

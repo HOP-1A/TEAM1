@@ -1,31 +1,35 @@
 "use client"
-import NavBar from "@/components/ui/navigationBar/NavBar";
 import { useEffect, useState } from "react";
+import NavBar from "@/components/ui/navigationBar/NavBar";
 
 interface User {
-  id: string,
-  username: string
+  id:          string    
+  username:    string
+  email:       string  
+  updatedAt:   Date;  
+  createdAt:   Date;
+  Product:     string
 }
+
  
 export default function () {
-  const [users, setUsers] = useState<User[]>([])
   const [search, setSearch] = useState<string>("")
-
+  const [users, setUsers] = useState<User[]>([])
+  console.log(users)
+  
   useEffect(() => {
     async function fetchUsers() {
       const res = await fetch("/api/users")
       const data = await res.json()
       setUsers(data)
-    }   
-    fetchUsers()  
+    }
+    fetchUsers()
+    
   }, [])
-
-  const filterdUsers = users.filter((users) => 
-    users.username.toLowerCase().includes(search.toLowerCase()),
+  const filterdUsers = users.filter((user) => 
+    user.username.toLowerCase().includes(search.toLowerCase())
   )
   
- 
- 
   return (
     <>
     <div className="flex min-h-screen">
@@ -33,7 +37,7 @@ export default function () {
       <div className="m-auto mt-[200px]">
       <div className="w-[1184px] h-[46px]">
         <span>
-          <input placeholder={"Search Sellers"} value={search} onChange={(e) => setSearch(e.target.value)}/>
+          <input placeholder={"placeholder"} value={search} onChange={(e) => setSearch(e.target.value)}/>
         </span>
       </div>
       <div className="flex flex-col w-[1200px] h-[500px] m-auto">
