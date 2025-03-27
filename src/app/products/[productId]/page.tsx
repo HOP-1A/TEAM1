@@ -10,9 +10,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useParams } from "next/navigation";
+<<<<<<< HEAD
 import { CartItem } from "@/app/page";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+=======
+import { toast } from "sonner";
+import { CartItem } from "@/app/page";
+>>>>>>> refs/remotes/origin/95-product-detail-be-integration
 type Listings = {
   id: string;
   categoryId: string;
@@ -32,7 +37,10 @@ const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
   const { productId } = useParams();
+<<<<<<< HEAD
   const { toast } = useToast();
+=======
+>>>>>>> refs/remotes/origin/95-product-detail-be-integration
 
   const getProduct = async () => {
     try {
@@ -71,10 +79,13 @@ const Page = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+<<<<<<< HEAD
 
     toast({
       title: "Амжилттай сагслагдлаа",
     });
+=======
+>>>>>>> refs/remotes/origin/95-product-detail-be-integration
   };
 
   useEffect(() => {
@@ -94,6 +105,7 @@ const Page = () => {
             <div className="flex">
               <Share2 className="w-[18px]" />
               <div className="pl-1">Хуваалцах</div>
+<<<<<<< HEAD
             </div>
           </div>
         </div>
@@ -160,6 +172,74 @@ const Page = () => {
             </div>
           </div>
         </div>
+=======
+            </div>
+          </div>
+        </div>
+
+        <div className="flex">
+          <div className="w-[700px] pr-6">
+            <div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <img
+                    className="w-[660px] h-full"
+                    src={selectProductImg || listing?.productImg[0]}
+                    alt="uploaded"
+                    onClick={() => setSelectedProductImg(selectProductImg)}
+                  />
+                </DialogTrigger>
+                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
+                  <DialogTitle className="text-white"></DialogTitle>
+                  <img
+                    src={selectProductImg}
+                    alt="preview"
+                    className="w-full h-auto "
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10 duration-300 ease-in-out">
+              {listing?.productImg.map((productImg, i) => {
+                return (
+                  <img
+                    key={i}
+                    className="border-white hover:border-rose-500 border-2"
+                    src={productImg}
+                    alt=""
+                    onClick={() => setSelectedProductImg(productImg)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="w-[500px] pl-6">
+            <div className="text-4xl mb-3">{listing?.name}</div>
+            <div className="text-4xl mb-7">{listing?.price} ₮</div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => addToCart(listing as Listings)}
+                className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400"
+              >
+                Сагслах
+              </button>
+            </div>
+
+            <div className="text-2xl mb-3 mt-5">
+              {listing?.delivery == true ? "Хүргэлттэй" : "Хүргэлтгүй"}
+            </div>
+            <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
+              <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
+                <Truck className="w-5" />
+              </div>
+              <div>Хүргэлттэй</div>
+            </div>
+          </div>
+        </div>
+>>>>>>> refs/remotes/origin/95-product-detail-be-integration
       </div>
     </div>
   );
