@@ -137,7 +137,12 @@ const Page = () => {
           </div>
 
           <div className="w-[500px] pl-6">
-            <div className="text-4xl mb-3">{listing?.name}</div>
+            <div className="text-4xl mb-3 flex justify-between">
+              <div>{listing?.name}</div>
+              <div>
+                <Heart />
+              </div>
+            </div>
             <div className="text-4xl mb-7">{listing?.price} ₮</div>
 
             <div className="flex gap-2">
