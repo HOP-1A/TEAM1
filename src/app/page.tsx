@@ -1,15 +1,24 @@
 "use client";
 
-import NavBar from "../components/ui/navigationBar/NavBar";
 import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 export type Listings = {
   id: string;
@@ -26,12 +35,14 @@ export type Listings = {
   delivery: boolean;
 };
 
-type CartItem = {
+export type CartItem = {
   id: string;
   quantity: number;
 };
 
 export default function Home() {
+  const { toast } = useToast();
+
   const [listings, setListings] = useState<Listings[]>([]);
   const addToCart = (item: Listings) => {
     const id = item.id;
@@ -49,17 +60,19 @@ export default function Home() {
     if (coincidedIndex === undefined) {
       cart.push({
         ...item,
-        quantity: 1,
+        quantity: Number(item.quantity),
       });
     } else {
       cart[coincidedIndex].quantity = cart[coincidedIndex].quantity + 1;
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    toast({
+      title: "Амжилттай сагслагдлаа",
+    });
   };
 
   const router = useRouter();
-
   const getProduct = async () => {
     try {
       const resJSON = await fetch("/api/product", {
@@ -68,61 +81,23 @@ export default function Home() {
       });
 
       const data = await resJSON.json();
-
+      console.log(data);
       if (Array.isArray(data)) {
         setListings(data);
       }
     } catch (error) {
       console.error("Error fetching product data:", error);
-    }
-  };
-
-  const getCategory = async () => {
-    try {
-      const resJSON = await fetch("/api/users", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const data = await resJSON.json();
-      console.log("Fetched Data:", data);
-
-      if (Array.isArray(data)) {
-        setListings(data);
-      }
-    } catch (error) {
-      console.error("Error fetching product data:", error);
-    }
-  };
-
-  const orderItem = async () => {
-    try {
-      const resJSON = await fetch("/api/order", {
-        method: "POST",
-        body: JSON.stringify({
-          userId: "123123123",
-          orders: [
-            { id: "059c83ab-5dd9-4b0e-90b5-b818ecf916b1", quantity: 2 },
-            { id: "192d8c37-8eca-44c5-afb0-43e78d0500a3", quantity: 3 },
-          ],
-        }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await resJSON.json();
-      console.log("created order:", data);
-    } catch (err) {
-      console.log(err);
     }
   };
 
   useEffect(() => {
-    getCategory();
-    getProduct;
+    getProduct();
   }, []);
+
+  console.log(listings);
 
   return (
     <>
-      <NavBar />
       <div className="flex flex-col justify-center items-center">
         <div className="max-w-[90vw] flex justify-between mt-64">
           <img
@@ -170,9 +145,10 @@ export default function Home() {
                 >
                   Дэлгэрэнгүй
                 </Button>
+
                 <Button
                   onClick={() => addToCart(item)}
-                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl "
+                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
                 >
                   Сагслах
                 </Button>
