@@ -19,6 +19,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Heart } from "lucide-react";
 
 export type Listings = {
   id: string;
@@ -42,7 +43,7 @@ export type CartItem = {
 
 export default function Home() {
   const { toast } = useToast();
-
+  const [like, setLike] = useState(false);
   const [listings, setListings] = useState<Listings[]>([]);
   const addToCart = (item: Listings) => {
     const id = item.id;
@@ -94,31 +95,38 @@ export default function Home() {
     getProduct();
   }, []);
 
-  console.log(listings);
+  console.log(like);
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center">
-        <div className="max-w-[90vw] flex justify-between mt-64">
+    <div className="flex flex-col justify-center items-center mt-[200px]">
+      <div className="flex">
+        <div>
           <img
             src="https://cdn.cody.mn/img/329789/3800x0xwebp/Frame_1000002587.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[400px] w-[600px] object-cover rounded-lg shadow-md"
+            className="h-[404px] w-[900px] object-cover rounded-[20px] shadow-none px-[8px]"
           />
+        </div>
+        <div className="px-[4px] flex flex-col gap-[4px]">
           <img
             src="https://cdn.cody.mn/img/328799/3800x0xwebp/banner_161banner.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[400px] w-[600px] object-cover rounded-lg shadow-md"
+            className="h-[200px] w-[450px] object-cover rounded-[8px] shadow-none"
           />
 
           <img
             src="https://cdn.cody.mn/img/328825/3800x0xwebp/banner_145banner.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[400px] w-[600px] object-cover rounded-lg shadow-md"
+            className="h-[200px] w-[450px] object-cover rounded-[8px] shadow-none"
           />
         </div>
-        <div className="w-full max-w-[80vw] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      </div>
+      <div className="w-full max-w-[85vw] mt-10">
+        <h2 className="text-[24px] font-semibold text-left ml-2 sm:ml-4 mb-6">
+          Бүх Бараанууд{" "}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[60px]">
           {listings.map((item) => (
             <Card
               key={item.id}
-              className="shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+              className="w-[300px] shadow-none rounded-[8px] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
             >
               <Carousel>
                 <CarouselContent>
@@ -135,9 +143,17 @@ export default function Home() {
               </Carousel>
 
               <CardContent className="p-4 bg-white space-x-2 ">
-                <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
-                  {item.name}
-                </h3>
+                <div className="flex justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
+                      {item.name}
+                    </h3>
+                  </div>
+                  <div onClick={() => setLike((prev) => !prev)}>
+                    <Heart />
+                  </div>
+                </div>
+
                 <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
                 <Button
                   className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
@@ -157,6 +173,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
