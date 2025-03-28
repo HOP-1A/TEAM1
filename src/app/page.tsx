@@ -10,8 +10,18 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React from "react"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { Heart } from "lucide-react";
 export type Listings = {
   id: string;
   categoryId: string;
@@ -34,7 +44,8 @@ type CartItem = {
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true)
-
+  const { toast } = useToast();
+  const [like, setLike] = useState(false);
   const [listings, setListings] = useState<Listings[]>([]);
   const addToCart = (item: Listings) => {
     const id = item.id;
