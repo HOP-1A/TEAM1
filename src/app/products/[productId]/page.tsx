@@ -32,6 +32,7 @@ type Listings = {
 const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
+  const [num, setNum] = useState<number>(1);
   const { productId } = useParams();
   const { toast } = useToast();
 
@@ -149,7 +150,7 @@ const Page = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => addToCart(listing as Listings)}
-                className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400"
+                className="flex justify-center items-center rounded-[5px] w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400 "
               >
                 Сагслах
               </button>
