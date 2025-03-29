@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Heart } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
 export type Listings = {
   id: string;
@@ -45,6 +46,19 @@ export default function Home() {
   const { toast } = useToast();
   const [like, setLike] = useState(false);
   const [listings, setListings] = useState<Listings[]>([]);
+  const img1 = [
+    "https://cdn.cody.mn/img/334304/4600x0xwebp/kahi_post_4.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/334305/4600x0xwebp/cycle_9.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
+  const img2 = [
+    "https://cdn.cody.mn/img/334309/4600x0xwebp/spring_post_8_banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
+  const img3 = [
+    "https://cdn.cody.mn/img/331665/4600x0xwebp/banner_13banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/331675/4600x0xwebp/banner_25banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
   const addToCart = (item: Listings) => {
     const id = item.id;
 
@@ -98,79 +112,143 @@ export default function Home() {
   console.log(like);
 
   return (
-    <div className="flex flex-col justify-center items-center mt-[200px]">
-      <div className="flex">
-        <div>
-          <img
-            src="https://cdn.cody.mn/img/329789/3800x0xwebp/Frame_1000002587.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[404px] w-[900px] object-cover rounded-[20px] shadow-none px-[8px]"
-          />
-        </div>
-        <div className="px-[4px] flex flex-col gap-[4px]">
-          <img
-            src="https://cdn.cody.mn/img/328799/3800x0xwebp/banner_161banner.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[200px] w-[450px] object-cover rounded-[8px] shadow-none"
-          />
-
-          <img
-            src="https://cdn.cody.mn/img/328825/3800x0xwebp/banner_145banner.jpg?h=ac0b9f60ba740222fdf9df36c6d3cc62f3b4e3dd"
-            className="h-[200px] w-[450px] object-cover rounded-[8px] shadow-none"
-          />
-        </div>
-      </div>
-      <div className="w-full max-w-[85vw] mt-10">
-        <h2 className="text-[24px] font-semibold text-left ml-2 sm:ml-4 mb-6">
-          Бүх Бараанууд{" "}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[60px]">
-          {listings.map((item) => (
-            <Card
-              key={item.id}
-              className="w-[300px] shadow-none rounded-[8px] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+    <div className="flex flex-col justify-center items-center mt-[200px] ">
+      <div className="w-[1300px]">
+        <div className="flex">
+          <div>
+            <Carousel
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              opts={{
+                loop: true,
+                align: "start",
+              }}
             >
-              <Carousel>
-                <CarouselContent>
-                  {item?.productImg?.map((image, index) => (
-                    <CarouselItem key={index}>
-                      <img
-                        src={image}
-                        alt={item.name}
-                        className="w-full h-64 object-cover"
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
+              <CarouselContent>
+                {img1.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <img
+                      src={image}
+                      alt={"img1"}
+                      className="h-[404px] w-[900px] object-cover rounded-[20px] shadow-none px-[8px]"
+                      loading="lazy"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+          <div className="px-[4px] flex flex-col gap-[4px]">
+            <Carousel
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              opts={{
+                loop: true,
+                align: "start",
+              }}
+            >
+              <CarouselContent>
+                {img2.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <img
+                      src={image}
+                      alt={"img1"}
+                      className="h-[200px] w-[600px] object-cover rounded-[8px] shadow-none"
+                      loading="lazy"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+            <Carousel
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              opts={{
+                loop: true,
+                align: "start",
+              }}
+            >
+              <CarouselContent>
+                {img3.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <img
+                      src={image}
+                      alt={"img1"}
+                      className="h-[200px] w-[600px] object-cover rounded-[8px] shadow-none"
+                      loading="lazy"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+        </div>
+        <div className="w-full max-w-[85vw] mt-10">
+          <h2 className="text-[24px] font-semibold text-left ml-2 sm:ml-4 mb-6">
+            Бүх Бараанууд{" "}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[30px]">
+            {listings.map((item) => (
+              <Card
+                key={item.id}
+                className="w-[300px] shadow-none rounded-[8px] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+              >
+                <Carousel>
+                  <CarouselContent>
+                    {item?.productImg?.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <img
+                          src={image}
+                          alt={item.name}
+                          className="w-full h-64 object-cover"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
 
-              <CardContent className="p-4 bg-white space-x-2 ">
-                <div className="flex justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
-                      {item.name}
-                    </h3>
+                <CardContent className="p-4 bg-white space-x-2 ">
+                  <div className="flex justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
+                        {item.name}
+                      </h3>
+                    </div>
+                    <div onClick={() => setLike((prev) => !prev)}>
+                      <Heart />
+                    </div>
                   </div>
-                  <div onClick={() => setLike((prev) => !prev)}>
-                    <Heart />
-                  </div>
-                </div>
 
-                <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
-                <Button
-                  className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
-                  onClick={() => router.push(`/products/${item.id}`)}
-                >
-                  Дэлгэрэнгүй
-                </Button>
+                  <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
+                  <Button
+                    className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+                    onClick={() => router.push(`/products/${item.id}`)}
+                  >
+                    Дэлгэрэнгүй
+                  </Button>
 
-                <Button
-                  onClick={() => addToCart(item)}
-                  className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
-                >
-                  Сагслах
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <Button
+                    onClick={() => addToCart(item)}
+                    className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+                  >
+                    Сагслах
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
