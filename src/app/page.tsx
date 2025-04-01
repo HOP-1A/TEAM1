@@ -37,6 +37,7 @@ export type CartItem = {
 export default function Home() {
   const { toast } = useToast();
   const [listings, setListings] = useState<Listings[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const img2 = [
     "https://cdn.cody.mn/img/334304/4600x0xwebp/kahi_post_4.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
@@ -93,6 +94,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error("Error fetching product data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,141 +105,153 @@ export default function Home() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <section className="relative w-full h-[300px] md:h-[500px]">
-        <Carousel
-          plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]}
-          opts={{ loop: true, align: "start" }}
-          className="w-full h-full"
-        >
-          <CarouselContent>
-            {img2.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="relative w-full h-[300px] md:h-[500px]">
+      {loading == true ? (
+        <div className="flex-col gap-4 w-full flex items-center justify-center mt-72">
+          <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full">
+            <div className="w-16 h-16 border-4 border-transparent text-rose-500 text-2xl animate-spin flex items-center justify-center border-t-rose-500 rounded-full"></div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <section className="relative w-full h-[300px] md:h-[500px]">
+            <Carousel
+              plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]}
+              opts={{ loop: true, align: "start" }}
+              className="w-full h-full"
+            >
+              <CarouselContent>
+                {img2.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative w-full h-[300px] md:h-[500px]">
+                      <img
+                        src={image}
+                        alt={`Hero ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </section>
+
+          <section className="container mx-auto px-4 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {img1.map((image, index) => (
+                <div
+                  key={index}
+                  className="relative rounded-xl overflow-hidden h-36 md:h-48"
+                >
                   <img
                     src={image}
-                    alt={`Hero ${index + 1}`}
+                    alt={"Promo"}
                     className="w-full h-full object-cover"
-                    loading="eager"
                   />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {img1.map((image, index) => (
-            <div
-              key={index}
-              className="relative rounded-xl overflow-hidden h-36 md:h-48"
-            >
-              <img
-                src={image}
-                alt={"Promo"}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex items-center pl-4">
-                <div>
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-2">
-                    {index === 0 ? "Хавар улиралд зориулсан" : "Онцгой хямдрал"}
-                  </h3>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="products" className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
-            Онцлох бүтээгдэхүүнүүд
-          </h2>
-          <Button
-            variant="ghost"
-            className="text-primary hover:bg-primary/10 text-sm md:text-base"
-            onClick={() => router.push("/products")}
-          >
-            Бүгдийг үзэх
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {listings.map((item) => (
-            <Card
-              key={item.id}
-              className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-primary/20"
-              onClick={() => router.push(`/products/${item.id}`)}
-            >
-              <div className="relative aspect-square">
-                <Carousel
-                  plugins={[
-                    Autoplay({ delay: 5000, stopOnInteraction: false }),
-                  ]}
-                  opts={{ loop: true, align: "start" }}
-                >
-                  <CarouselContent>
-                    {item?.productImg?.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <img
-                          src={image}
-                          alt={item.name}
-                          className="w-full h-56 md:h-72 object-cover"
-                          loading="lazy"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
-
-                <Button
-                  size="sm"
-                  className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary hover:bg-primary-dark"
-                  onClick={(e) => addToCart(item, e)}
-                >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Сагслах
-                </Button>
-              </div>
-
-              <CardContent className="p-3 space-y-2">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-1">
-                    <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
-                      {item.name}
-                    </h3>
-                    <div className="flex items-center text-gray-500 text-xs">
-                      <Clock className="w-3 h-3 mr-1" />
-                      <span>
-                        {new Date(item.createdAt).toLocaleDateString()}
-                      </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex items-center pl-4">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                        {index === 0
+                          ? "Хавар улиралд зориулсан"
+                          : "Онцгой хямдрал"}
+                      </h3>
                     </div>
                   </div>
-                  <Like likedUserId={item} />
                 </div>
+              ))}
+            </div>
+          </section>
 
-                <div className="flex justify-between items-center">
-                  <p className="text-lg font-bold text-gray-900">
-                    {Number(item.price).toLocaleString()}₮
-                  </p>
-                  <div className="flex items-center bg-primary/10 px-2 py-1 rounded-full">
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
-                    <span className="text-sm font-medium">4.8</span>
-                  </div>
-                </div>
+          <section id="products" className="container mx-auto px-4 py-8">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+                Онцлох бүтээгдэхүүнүүд
+              </h2>
+              <Button
+                variant="ghost"
+                className="text-primary hover:bg-primary/10 text-sm md:text-base"
+                onClick={() => router.push("/products")}
+              >
+                Бүгдийг үзэх
+              </Button>
+            </div>
 
-                {item.delivery && (
-                  <div className="text-xs text-green-600 font-medium">
-                    Хүргэлттэй
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {listings.map((item) => (
+                <Card
+                  key={item.id}
+                  className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-primary/20"
+                  onClick={() => router.push(`/products/${item.id}`)}
+                >
+                  <div className="relative aspect-square">
+                    <Carousel
+                      plugins={[
+                        Autoplay({ delay: 5000, stopOnInteraction: false }),
+                      ]}
+                      opts={{ loop: true, align: "start" }}
+                    >
+                      <CarouselContent>
+                        {item?.productImg?.map((image, index) => (
+                          <CarouselItem key={index}>
+                            <img
+                              src={image}
+                              alt={item.name}
+                              className="w-full h-56 md:h-72 object-cover"
+                              loading="lazy"
+                            />
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                    </Carousel>
+
+                    <Button
+                      size="sm"
+                      className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary hover:bg-primary-dark"
+                      onClick={(e) => addToCart(item, e)}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Сагслах
+                    </Button>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+
+                  <CardContent className="p-3 space-y-2">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-1">
+                        <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
+                          {item.name}
+                        </h3>
+                        <div className="flex items-center text-gray-500 text-xs">
+                          <Clock className="w-3 h-3 mr-1" />
+                          <span>
+                            {new Date(item.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                      <Like likedUserId={item} />
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <p className="text-lg font-bold text-gray-900">
+                        {Number(item.price).toLocaleString()}₮
+                      </p>
+                      <div className="flex items-center bg-primary/10 px-2 py-1 rounded-full">
+                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
+                        <span className="text-sm font-medium">4.8</span>
+                      </div>
+                    </div>
+
+                    {item.delivery && (
+                      <div className="text-xs text-green-600 font-medium">
+                        Хүргэлттэй
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
         </div>
-      </section>
+      )}
     </div>
   );
 }
