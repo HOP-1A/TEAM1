@@ -70,7 +70,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center mt-[20px]">
+    <div className="flex justify-center mt-[200px]">
       <div className="border-[1px] border-gray-200 rounded-[16px] h-[281px] w-[280px]">
         <div className="flex h-[75px] w-[278px] px-[16px] py-[12px] items-center gap-[10px] border-b-[1px] border-gray-200 mb-[12px]">
           <div>

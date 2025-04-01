@@ -1,7 +1,7 @@
 "use client"
 function Footer() {
   return (
-    <div className="min-h-screen">
+    <div className="w-full mt-10 max-h-screen">
     
     <footer className='flex flex-col items-center w-full text-white pt-12 pb-5' style={{ backgroundColor: '#FF3476' }}>
       <div className='max-w-6xl mx-auto flex text-lg'>
