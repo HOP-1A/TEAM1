@@ -24,6 +24,7 @@ model Users {
   Product     Product[]
   Order       Order[]
   OrderItem   OrderItem[]
+  LikeItem    LikeItem[]
 }
  
 model Product {
@@ -40,7 +41,8 @@ model Product {
   createdAt   DateTime @default(now())
   usersId     String
   categoryId  String
-  orderItems  OrderItem[]
+  OrderItems  OrderItem[]
+  LikeItem    LikeItem[]
 }
  
 model Category {
@@ -69,4 +71,13 @@ model OrderItem {
   users       Users    @relation(fields: [usersId], references: [id])
   orderId     String
   order       Order    @relation(fields: [orderId], references: [id])
+}
+
+
+model LikeItem {
+  id String @id @default(uuid())
+  productId  String
+  product Product @relation(fields: [productId], references: [id])
+  usersId String
+  users Users @relation(fields: [usersId], references: [id])
 }

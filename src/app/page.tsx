@@ -9,7 +9,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
+import { jwtDecode } from "jwt-decode";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Heart } from "lucide-react";
+import Like from "../customComponents/Like";
 import Autoplay from "embla-carousel-autoplay";
 
 export type Listings = {
@@ -44,7 +45,8 @@ export type CartItem = {
 
 export default function Home() {
   const { toast } = useToast();
-  const [like, setLike] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [likes, setLikes] = useState([]);
   const [listings, setListings] = useState<Listings[]>([]);
   const img1 = [
     "https://cdn.cody.mn/img/334304/4600x0xwebp/kahi_post_4.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
@@ -107,9 +109,13 @@ export default function Home() {
 
   useEffect(() => {
     getProduct();
+    // const storageToken = localStorage.getItem("accessToken");
+    // const decodedToken = jwtDecode(storageToken ?? "");
+    // const user = decodedToken.userId;
+    // setUserId(user);
   }, []);
 
-  console.log(like);
+  console.log(userId);
 
   return (
     <div className="flex flex-col justify-center items-center mt-[200px] ">
@@ -226,8 +232,8 @@ export default function Home() {
                         {item.name}
                       </h3>
                     </div>
-                    <div onClick={() => setLike((prev) => !prev)}>
-                      <Heart />
+                    <div>
+                      <Like likedUserId={item} />
                     </div>
                   </div>
 
