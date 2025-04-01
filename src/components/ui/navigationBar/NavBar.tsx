@@ -1,28 +1,35 @@
 "use client";
-
-import { ChevronDown, Heart, Instagram, Phone, Search } from "lucide-react";
-
+import {
+  ChevronDown,
+  Heart,
+  Instagram,
+  Linkedin,
+  Menu,
+  MessagesSquare,
+  Minus,
+  Phone,
+  Search,
+  Twitter,
+} from "lucide-react";
+ 
 import {
   SignInButton,
   SignUpButton,
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-
+ 
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import router from "next/router";
 
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-
+ 
 export default function NavBar() {
-  const router = useRouter();
-  const redirect = () => {
-    router.push(`/`);
-  };
   return (
     <div id="headerDesktop" className="fixed w-full bg-[white] z-40 top-0">
       <div
@@ -90,13 +97,12 @@ export default function NavBar() {
             id="headerTall"
             className="flex items-center justify-between max-w-[1200px] min-w-[1184px] h-[94px] "
           >
-            <div id="zaryFont" className="flex ">
+            <Link href="/" id="zaryFont" className="flex">
               <img
                 src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
                 className="w-[96px h-[43px]"
-                onClick={() => redirect()}
               ></img>
-            </div>
+            /</Link>
             {/* Search tab Search Tab Search Tab */}
             <div
               id="searchContainer"
@@ -233,3 +239,4 @@ export default function NavBar() {
     </div>
   );
 }
+ 
