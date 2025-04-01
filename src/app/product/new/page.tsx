@@ -1,238 +1,161 @@
-'use client';
-import NavBar from "@/components/ui/navigationBar/NavBar"
-import Footer from "@/app/_components/Footer"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+'use client'
+
 import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
-const formSchema = z.object({
-    price: z.string().refine((val) => !isNaN(Number(val)), {
-        message: "Must be a number"
-    }),
-    quantity: z.string().refine((val) => !isNaN(Number(val)), {
-        message: "Must be a number"
-    }),
-    description: z.string(),
-    productImg: z.array(z.string()),
-    // category: z.enum(["profile", "billing"]),
-    category: z.string(),
-    name: z.string(),
-    delivery: z.boolean(),
-    usersId: z.string(),
-    categoryId: z.string()
-});
+type categoryType = {
+    id: string;
+    categoryName: string;
+    categoryImg: string;
+};
 
-export default function newProduct() {
+const Home = () => {
+    const [images, setImages] = useState<FileList | null>(null);
+    const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+    const [name, setName] = useState<String>("");
+    const [description, setDescription] = useState<String>("");
+    const [price, setPrice] = useState<Number>(0);
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            price: "",
-            quantity: "",
-            description: "",
-            productImg: [""],
-            category: "",
-            name: "",
-            delivery: false,
-            usersId: "mocke8373849743298",
-            categoryId: "34242"
-        }
-    });
-    const handleRequest = async (items: z.infer<typeof formSchema>) => {
-        console.log(window.location.host);
-        const raw = await fetch(`http://${window.location.host}/api/product`, {
-            method: "POST",
-            body: JSON.stringify(items),
-        })
-        const res = await raw.json();
-        console.log(res);
-        
-        /*
-          REQUEST TO SERVER
-        */
+
+
+    const [isAdded, setIsAdded] = useState<boolean>(false);
+
+    const uploadImages = async () => {
+        if (!images) return;
+
+        const uploadPromises = Array.from(images).map(async (image) => {
+            const formData = new FormData();
+            formData.append("file", image);
+            formData.append("upload_preset", "product");
+            formData.append("cloud_name", "dxckphai4");
+
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/dxckphai4/image/upload",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+            console.log(response);
+
+            if (!response.ok) {
+                throw new Error("Failed to upload image");
+            }
+
+            const result = await response.json();
+            return result.secure_url;
+        });
+
+        const uploadedUrls = await Promise.all(uploadPromises);
+
+        setUploadedImages(uploadedUrls.filter((url) => url !== null) as string[]);
     };
-    
+
+
+    const handleAddProduct = async () => {
+        const response = await fetch("../api/product/addProduct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name,
+                description,
+                price,
+                imgUrl: uploadedImages[0],
+            }),
+        });
+        if (!response) {
+            setIsAdded(false);
+        } else {
+            setIsAdded(true);
+        }
+    };
+
     return (
-        <div className="flex flex-col">
-            <NavBar />
-            <div className="mt-[255px] mb-[100px]">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(handleRequest)}
-                        className="flex flex-col items-center"
-                    >
-                        <div>
-                            <div>
-                                <span>
-                                    Барааны мэдээлэл
-                                </span>
-                            </div>
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            Барааны нэр
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="price"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            Үнэ
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input type="number" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="delivery"
-                                render={({ field }) => (
-                                    <FormItem className="flex items-center justify-between">
-                                        <div>
-                                            <FormControl className="mt-2">
-                                                <Checkbox
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                            <span className="ml-1 text-[#888a99] text-sm">
-                                                хүргэх
-                                            </span>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="productImg"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            productImg
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            description
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="quantity"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            quantity
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input type="number" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            {/* <FormField
-                                control={form.control}
-                                name="category"
-                                render={({ field }) => (
-                                    <FormItem className="space-y-3">
-                                        <DropdownMenuTrigger>Notify me about...</DropdownMenuTrigger>
-                                        <FormControl>
-                                            <DropdownMenuContent>
-                                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                                <DropdownMenuSeparator />
-
-                                                <FormItem className="flex items-center space-x-3 space-y-0">
-                                                    <FormControl>
-                                                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                                                    </FormControl>
-                                                </FormItem>
-                                                <FormItem className="flex items-center space-x-3 space-y-0">
-                                                    <FormControl>
-                                                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                                                    </FormControl>
-                                                </FormItem>
-                                                <FormItem className="flex items-center space-x-3 space-y-0">
-                                                    <FormControl>
-                                                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                                                    </FormControl>
-                                                </FormItem>
-                                            </DropdownMenuContent>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            /> */}
-                             <FormField
-                                control={form.control}
-                                name="category"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            category
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            <Button type="submit" className="bg-[#ff3467] py-6">
-                                Нэвтрэх
-                            </Button>
-
-
-                        </div>
-                        <div>
-
-                        </div>
-                    </form>
-                </Form>
+        <div className="sm:max-w-[425px] mt-[200px] flex flex-col justify-center  mx-auto">
+            <div>
+                <div>Add product</div>
             </div>
-            <Footer />
-        </div >
-    )
-}
+            <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                        Image
+                    </Label>
+                    <Input
+                        type="file"
+                        className="col-span-3"
+                        onChange={(e) => {
+                            const files = e.target.files;
+                            if (files) {
+                                setImages(files);
+                            }
+                        }}
+                    />
+                </div>
+
+                <Button onClick={uploadImages} className="hover:cursor-pointer">
+                    Upload
+                </Button>
+
+                <div className="text-center w-90%">
+                    {uploadedImages.map((img, index) => (
+                        <div className="flex flex-col items-center gap-4" key={index}>
+                            <img
+                                src={img}
+                                className="aspect-auto rounded-lg shadow-lg w-[300px]"
+                                alt="Uploaded"
+                                width={50}
+                                height={50}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                        Name
+                    </Label>
+                    <Input
+                        placeholder="Name"
+                        className="col-span-3"
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="description" className="text-right">
+                        Description
+                    </Label>
+                    <Input
+                        placeholder="Description"
+                        className="col-span-3"
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="price" className="text-right">
+                        Price
+                    </Label>
+                    <Input
+                        placeholder="Price"
+                        className="col-span-3"
+                        onChange={(e) => setPrice(Number(e.target.value))}
+                    />
+                </div>
+            </div>
+            <Button type="submit" onClick={handleAddProduct}>
+                Submit
+            </Button>
+        </div>
+    );
+};
+
+export default Home
