@@ -12,8 +12,15 @@ import {
 import { useParams } from "next/navigation";
 import { CartItem } from "@/app/page";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import Like from "../../../customComponents/Like";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 type Listings = {
   id: string;
   categoryId: string;
@@ -32,7 +39,9 @@ type Listings = {
 const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
-  const [num, setNum] = useState<number>(1);
+  const [quantity, setQuantity] = useState<string[]>([]);
+  const [quantity1, setQuantity1] = useState<string>("1");
+  console.log(quantity1);
   const { productId } = useParams();
   const { toast } = useToast();
 
@@ -43,7 +52,12 @@ const Page = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await resJSON.json();
-      console.log(data.message);
+      const quantityArray =
+        data.message.quantity > 0
+          ? Array.from({ length: data.message.quantity }, (_, i) => `${i + 1}`)
+          : [];
+
+      setQuantity(quantityArray);
       setListing(data.message);
     } catch (error) {
       console.error("Error fetching product data:", error);
@@ -69,7 +83,8 @@ const Page = () => {
         quantity: 1,
       });
     } else {
-      cart[coincidedIndex].quantity = cart[coincidedIndex].quantity + 1;
+      cart[coincidedIndex].quantity =
+        cart[coincidedIndex].quantity + Number(quantity1);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -146,14 +161,29 @@ const Page = () => {
               </div>
             </div>
             <div className="text-4xl mb-7">{listing?.price} ₮</div>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => addToCart(listing as Listings)}
-                className="flex justify-center items-center rounded-[5px] w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400 "
-              >
-                Сагслах
-              </button>
+            <div className="flex gap-4">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => addToCart(listing as Listings)}
+                  className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400"
+                >
+                  Сагслах
+                </button>
+              </div>
+              <div>
+                <Select onValueChange={(value) => setQuantity1(value)}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {quantity.map((item, i) => (
+                      <SelectItem key={i} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="text-2xl mb-3 mt-5">Хүргэлттэй эсэх</div>
