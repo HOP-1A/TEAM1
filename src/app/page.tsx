@@ -9,7 +9,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
+import { jwtDecode } from "jwt-decode";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Heart } from "lucide-react";
+import Like from "../customComponents/Like";
 
 export type Listings = {
   id: string;
@@ -43,7 +44,8 @@ export type CartItem = {
 
 export default function Home() {
   const { toast } = useToast();
-  const [like, setLike] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [likes, setLikes] = useState([]);
   const [listings, setListings] = useState<Listings[]>([]);
   const addToCart = (item: Listings) => {
     const id = item.id;
@@ -91,11 +93,39 @@ export default function Home() {
     }
   };
 
+  // const likeProduct = async (item: any) => {
+  //   try {
+  //     const userLiked = item?.LikeItem?.forEach((like: any) => {
+  //       console.log(`Product ID: ${like.productId}, User ID: ${like.usersId}`);
+  //     });
+  //     setLikes(userLiked);
+  //     const resJSON = await fetch("/api/like", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         usersId: "123123123",
+  //         productId: String(item.id),
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     const data = await resJSON.json();
+  //     console.log(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   useEffect(() => {
     getProduct();
+    // const storageToken = localStorage.getItem("accessToken");
+    // const decodedToken = jwtDecode(storageToken ?? "");
+    // const user = decodedToken.userId;
+    // setUserId(user);
   }, []);
 
-  console.log(like);
+  console.log(userId);
 
   return (
     <div className="flex flex-col justify-center items-center mt-[200px]">
@@ -149,8 +179,13 @@ export default function Home() {
                       {item.name}
                     </h3>
                   </div>
-                  <div onClick={() => setLike((prev) => !prev)}>
-                    <Heart />
+                  <div>
+                    <Like likedUserId={item} />
+                    {/* <Heart
+                      color={likes ? "red" : "black"}
+                      fill={likes ? "red" : "white"}
+                      onClick={() => likeProduct(item)}
+                    /> */}
                   </div>
                 </div>
 

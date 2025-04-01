@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 import { CartItem } from "@/app/page";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import Like from "../../../customComponents/Like";
 type Listings = {
   id: string;
   categoryId: string;
@@ -140,7 +141,7 @@ const Page = () => {
             <div className="text-4xl mb-3 flex justify-between">
               <div>{listing?.name}</div>
               <div>
-                <Heart />
+                <Like likedUserId={listing} />
               </div>
             </div>
             <div className="text-4xl mb-7">{listing?.price} ₮</div>
