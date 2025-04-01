@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Heart } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 export type Listings = {
   id: string;
   categoryId: string;
@@ -46,7 +47,20 @@ export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true)
   const { toast } = useToast();
   const [like, setLike] = useState(false);
-  const [listings, setListings] = useState<Listings[]>([]);
+  const [listings, setListings] = xuseState<Listings[]>([]);
+  const img1 = [
+    "https://cdn.cody.mn/img/334304/4600x0xwebp/kahi_post_4.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/334305/4600x0xwebp/cycle_9.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
+  const img2 = [
+    "https://cdn.cody.mn/img/334309/4600x0xwebp/spring_post_8_banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
+  const img3 = [
+    "https://cdn.cody.mn/img/331665/4600x0xwebp/banner_13banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+    "https://cdn.cody.mn/img/331675/4600x0xwebp/banner_25banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
+  ];
   const addToCart = (item: Listings) => {
     const id = item.id;
 
@@ -166,6 +180,4 @@ export default function Home() {
   </div>
 </div>
 }
-    </>
-  );
-}
+ 
