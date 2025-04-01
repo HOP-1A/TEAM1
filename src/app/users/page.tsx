@@ -1,15 +1,30 @@
-import { PrismaClient } from "@prisma/client";
-import getUsers from "@/lib/getUsers";
+"use client"
 import NavBar from "@/components/ui/navigationBar/NavBar";
- 
-export default async function UsersPage() {
+import { useEffect, useState } from "react";
 
-  const users = await getUsers();
-  console.log(users)
+interface User {
+  id: string,
+  username: string
+}
  
-  if (users.length === 0) {
-    return <p>No users</p>;
-  }
+export default function () {
+  const [users, setUsers] = useState<User[]>([])
+  const [search, setSearch] = useState<string>("")
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const res = await fetch("/api/users")
+      const data = await res.json()
+      setUsers(data)
+    }   
+    fetchUsers()  
+  }, [])
+
+  const filterdUsers = users.filter((users) => 
+    users.username.toLowerCase().includes(search.toLowerCase()),
+  )
+  
+ 
  
   return (
     <>
@@ -18,18 +33,15 @@ export default async function UsersPage() {
       <div className="m-auto mt-[200px]">
       <div className="w-[1184px] h-[46px]">
         <span>
-          <input placeholder="Search users">
- 
-          </input>
+          <input placeholder={"Search Sellers"} value={search} onChange={(e) => setSearch(e.target.value)}/>
         </span>
       </div>
       <div className="flex flex-col w-[1200px] h-[500px] m-auto">
         <h1 className="text-center text-black text-2xl py-4">Sellers</h1>
         <div className="grid grid-cols-3 gap-4">
-          {users.map((user) => (
+          {filterdUsers.map((user) => (
             <div key={user.id} className="p-4 bg-gray-100 rounded-lg shadow-md">
               <strong className="text-lg">{user.username}</strong>
-              <p className="text-gray-600">{user.email}</p>
             </div>
           ))}
         </div>
