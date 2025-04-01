@@ -6,8 +6,11 @@ import { Listings } from "../page";
 import { Button } from "@/components/ui/button";
 import { ShoppingBasket } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const Page = () => {
+  const user = useUser();
+  const userId = user.user?.id;
   const router = useRouter();
 
   const redirect = () => {
@@ -38,7 +41,7 @@ const Page = () => {
     const resJSON = await fetch("/api/order", {
       method: "POST",
       body: JSON.stringify({
-        userId: "123123123",
+        userId,
         orders: cart?.map((product) => {
           return {
             id: product.id,
@@ -161,7 +164,10 @@ const Page = () => {
                       <div className="mt-3">{getTotalPrice()} ₮</div>
                     </div>
                   </div>
-                  <button className="w-[388px] h-14 bg-gray-100 rounded-xl mt-4">
+                  <button
+                    onClick={orderItem}
+                    className="w-[388px] h-14 bg-gray-100 rounded-xl mt-4"
+                  >
                     Төлбөрийн нөхцөл сонгох
                   </button>
                 </div>
