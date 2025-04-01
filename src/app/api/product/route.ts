@@ -5,6 +5,17 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
+    console.log({
+      price: body?.price,
+      quantity: body?.quantity,
+      description: body?.description,
+      productImg: body?.productImg,
+      categoryId: body?.categoryId,
+      name: body?.name,
+      delivery: body?.delivery,
+      usersId: body?.usersId,
+    });
+    
     const product = await prisma.product.create({
       data: {
         price: body?.price,
