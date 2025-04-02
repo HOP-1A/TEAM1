@@ -17,6 +17,7 @@ export const POST = async (req: Request) => {
     const userLike = await prisma.likeItem.findFirst({
       where: {
         productId: body.productId,
+        usersId: body.usersId,
       },
     });
 
@@ -35,6 +36,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ message: "success" });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ message: err });
   }
 };

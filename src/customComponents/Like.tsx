@@ -34,7 +34,6 @@ const Page = ({ likedUserId }: any) => {
       toast({
         title: "Amjilltai",
       });
-      window.location.reload();
     } catch (err) {
       toast({
         title: "Failed",
