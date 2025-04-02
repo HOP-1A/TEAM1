@@ -50,7 +50,11 @@ console.log({
 
 export const GET = async () => {
   try {
-    const product = await prisma.product.findMany();
+    const product = await prisma.product.findMany({
+      include: {
+        LikeItem: true,
+      },
+    });
     return NextResponse.json(product);
   } catch (err) {
     return NextResponse.json(err);
