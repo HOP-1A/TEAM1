@@ -88,7 +88,6 @@ export default function Home() {
       });
 
       const data = await resJSON.json();
-      console.log(data);
       if (Array.isArray(data)) {
         setListings(data);
       }
@@ -99,13 +98,7 @@ export default function Home() {
 
   useEffect(() => {
     getProduct();
-    // const storageToken = localStorage.getItem("accessToken");
-    // const decodedToken = jwtDecode(storageToken ?? "");
-    // const user = decodedToken.userId;
-    // setUserId(user);
   }, []);
-
-  console.log(userId);
 
   return (
     <div className="flex flex-col justify-center items-center mt-[200px] ">
@@ -115,7 +108,7 @@ export default function Home() {
             <Carousel
               plugins={[
                 Autoplay({
-                  delay: 5000,
+                  delay: 2000,
                   stopOnInteraction: false,
                 }),
               ]}
@@ -142,7 +135,7 @@ export default function Home() {
             <Carousel
               plugins={[
                 Autoplay({
-                  delay: 5000,
+                  delay: 3000,
                   stopOnInteraction: false,
                 }),
               ]}
@@ -167,7 +160,7 @@ export default function Home() {
             <Carousel
               plugins={[
                 Autoplay({
-                  delay: 5000,
+                  delay: 3000,
                   stopOnInteraction: false,
                 }),
               ]}
@@ -199,53 +192,70 @@ export default function Home() {
             {listings.map((item) => (
               <Card
                 key={item.id}
-                className="w-[300px] shadow-none rounded-[8px] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+                className="w-[300px] shadow-sm rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-gray-200"
                 onClick={() => router.push(`/products/${item.id}`)}
               >
-                <Carousel
-                  plugins={[
-                    Autoplay({
-                      delay: 5000,
-                      stopOnInteraction: false,
-                    }),
-                  ]}
-                  opts={{
-                    loop: true,
-                    align: "start",
-                  }}
-                >
-                  <CarouselContent>
-                    {item?.productImg?.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <img
-                          src={image}
-                          alt={item.name}
-                          className="w-full h-72 object-cover"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
+                <div className="relative">
+                  <Carousel
+                    plugins={[
+                      Autoplay({
+                        delay: 5000,
+                        stopOnInteraction: false,
+                      }),
+                    ]}
+                    opts={{
+                      loop: true,
+                      align: "start",
+                    }}
+                  >
+                    <CarouselContent>
+                      {item?.productImg?.map((image, index) => (
+                        <CarouselItem key={index}>
+                          <div className="relative aspect-square">
+                            <img
+                              src={image}
+                              alt={item.name}
+                              className="w-full h-72 object-cover"
+                              loading="lazy"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    {item.productImg.length > 1 && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
+                    )}
+                  </Carousel>
+                </div>
 
-                <CardContent className="p-4 bg-white space-x-2 ">
-                  <div className="flex justify-between">
-                    <div>
-                      <div className="flex items-center text-gray-900 space-x-2 px-1">
-                        <Clock className="w-4 h-4" />
-                        <span>
-                          {new Date(item.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <h3 className="text-lg text-gray-500 ml-[9px]">
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-1">
+                      <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
                         {item.name}
                       </h3>
+                      <div className="flex items-center text-gray-500 text-sm">
+                        <Clock className="w-3 h-3 mr-1" />
+                        <span>
+                          {new Date(item.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          )}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <Like likedUserId={item} />
-                    </div>
+                    <Like likedUserId={item} />
                   </div>
 
-                  <p className="text-gray-900 font-bold">{item.price}₮</p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-lg font-bold text-gray-900">
+                      {Number(item.price).toLocaleString()}₮
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             ))}

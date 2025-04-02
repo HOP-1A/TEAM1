@@ -1,16 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
-import { jwtDecode } from "jwt-decode";
 import { useUser } from "@clerk/nextjs";
 
 const Page = ({ likedUserId }: any) => {
   const user = useUser();
   const userId = user.user?.id;
-  console.log(userId);
   const [likes, setLikes] = useState(false);
-  // const token = localStorage.getItem("accessToken");
-  // const decodedToken = jwtDecode(token ?? "");
 
   useEffect(() => {
     if (likedUserId?.LikeItem?.some((like: any) => like.usersId === userId)) {
@@ -34,16 +30,11 @@ const Page = ({ likedUserId }: any) => {
       });
 
       const data = await resJSON.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
-  console.log(likes);
   return (
     <div>
-      {" "}
       <Heart
         onClick={() => likeProduct(likedUserId)}
         color={likes ? "red" : "black"}
