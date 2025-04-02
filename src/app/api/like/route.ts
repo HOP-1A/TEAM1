@@ -17,7 +17,6 @@ export const POST = async (req: Request) => {
     const userLike = await prisma.likeItem.findFirst({
       where: {
         productId: body.productId,
-        usersId: body.usersId,
       },
     });
 
@@ -38,4 +37,22 @@ export const POST = async (req: Request) => {
   } catch (err) {
     return NextResponse.json({ message: err });
   }
+};
+
+export const GET = async (req: Request) => {
+  const url = new URL(req.url);
+  const userId = url.searchParams.get("userId");
+
+  if (!userId) {
+    throw new Error("Please sign in");
+  }
+  const likedProducts = await prisma.likeItem.findMany({
+    where: {
+      usersId: userId,
+    },
+    select: {
+      product: true,
+    },
+  });
+  return NextResponse.json({ data: likedProducts });
 };

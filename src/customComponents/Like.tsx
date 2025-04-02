@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ likedUserId }: any) => {
   const user = useUser();
+  const { toast } = useToast();
   const userId = user.user?.id;
   const [likes, setLikes] = useState(false);
 
@@ -18,7 +20,7 @@ const Page = ({ likedUserId }: any) => {
 
   const likeProduct = async (likedUserId: any) => {
     try {
-      const resJSON = await fetch("/api/like", {
+      await fetch("/api/like", {
         method: "POST",
         body: JSON.stringify({
           usersId: userId,
@@ -29,8 +31,15 @@ const Page = ({ likedUserId }: any) => {
         },
       });
 
-      const data = await resJSON.json();
-    } catch (err) {}
+      toast({
+        title: "Amjilltai",
+      });
+      window.location.reload();
+    } catch (err) {
+      toast({
+        title: "Failed",
+      });
+    }
   };
 
   return (
