@@ -13,32 +13,23 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
-    const { price, quantity, description, productImg, category, name, delivery, usersId} = body;
+    const { price, quantity, description, imgUrl, category, name, delivery, usersId} = body;
     
     const key: keyof typeof categoryHashmap = category;
     
-console.log({
-  price: body?.price,
-  quantity: body?.quantity,
-  description: body?.description,
-  productImg: body?.imgUrl,
-  categoryId: categoryHashmap[key],
-  name: body?.name,
-  delivery: body?.delivery,
-  usersId: body?.usersId,
-})
+    const payload = {
+      price,
+      quantity,
+      description,
+      productImg: imgUrl,
+      categoryId: categoryHashmap[key],
+      name,
+      delivery,
+      usersId
+    }
     
     const product = await prisma.product.create({
-      data: {
-        price: body?.price,
-        quantity: body?.quantity,
-        description: body?.description,
-        productImg: body?.imgUrl,
-        categoryId: categoryHashmap[key],
-        name: body?.name,
-        delivery: body?.delivery,
-        usersId: body?.usersId,
-      },
+      data: payload,
     });
 
 
