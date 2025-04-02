@@ -32,10 +32,6 @@ export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const redirect = () => {
-    router.push(`/`);
-  };
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -119,7 +115,7 @@ export default function NavBar() {
       <div className="relative">
         <div className="flex justify-between items-center px-4 md:px-6 lg:max-w-6xl lg:mx-auto h-14 md:h-20">
           <div className="flex items-center">
-            <button onClick={redirect} className="mr-2 md:mr-4">
+            <button onClick={() =>{ router.push('./')}} className="mr-2 md:mr-4">
               <img
                 src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
                 className="w-16 md:w-24 h-auto"
@@ -201,7 +197,9 @@ export default function NavBar() {
             </div>
             <button
               className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors"
+              onClick={() => router.push('./product/new')}
               aria-label="Add listing"
+
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
