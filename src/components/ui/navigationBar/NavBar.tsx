@@ -115,7 +115,12 @@ export default function NavBar() {
       <div className="relative">
         <div className="flex justify-between items-center px-4 md:px-6 lg:max-w-6xl lg:mx-auto h-14 md:h-20">
           <div className="flex items-center">
-            <button onClick={() =>{ router.push('./')}} className="mr-2 md:mr-4">
+            <button
+              onClick={() => {
+                router.push("./");
+              }}
+              className="mr-2 md:mr-4"
+            >
               <img
                 src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
                 className="w-16 md:w-24 h-auto"
@@ -197,9 +202,8 @@ export default function NavBar() {
             </div>
             <button
               className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors"
-              onClick={() => router.push('./product/new')}
+              onClick={() => router.push("./product/new")}
               aria-label="Add listing"
-
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -231,95 +235,41 @@ export default function NavBar() {
                 </button>
               </div>
             </form>
-            <nav className="flex flex-col space-y-3">
-              <Link
-                href="/users"
-                className="text-gray-700 hover:text-rose-500 transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+            <span className="flex h-[40px] rounded-md pl-[10px] ">
+              <input
+                className="w-[338px] h-[40px] text-ellipsis"
+                placeholder="Барааны нэр, зарын дугаар, түлхүүр үг, утасны дугаар..."
+              ></input>
+              <span
+                id="searchButton"
+                className="w-[80px] h-[40px] flex justify-center items-center text-white w-[80px] h-[40px] size-max rounded-[2px] bg-rose-500"
               >
-                Users
-              </Link>
-              <button className="text-left text-gray-700 hover:text-rose-500 transition-colors py-2">
-                Шинэ бараа
-              </button>
-              <button
-                className="flex items-center text-gray-700 hover:text-rose-500 transition-colors py-2"
-                onClick={() => {
-                  router.push("/wishlist");
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                <Heart className="h-5 w-5 mr-2 fill-rose-500" />
-                Хадгалсан
-              </button>
-              <button
-                onClick={() => {
-                  router.push(`/cart`);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center text-gray-700 hover:text-rose-500 transition-colors py-2"
-              >
-                <svg
-                  viewBox="0 0 15 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 mr-2"
-                >
-                  <g stroke="currentColor">
-                    <path d="M4.632 7.312V3.478a2.853 2.853 0 1 1 5.707 0v3.834"></path>
-                    <path
-                      d="M13.103 17.389H1.868a.892.892 0 0 1-.803-.892l.713-10.522a.713.713 0 0 1 .803-.714h9.809a.714.714 0 0 1 .803.714l.713 10.522a.892.892 0 0 1-.803.892Z"
-                      fill="currentColor"
-                    ></path>
-                  </g>
-                </svg>
-                Сагс
-              </button>
-              <div className="pt-2 border-t border-gray-200">
-                <SignedOut>
-                  <SignInButton>
-                    <button
-                      className="w-full py-2 px-4 text-sm rounded-md bg-gray-100 hover:bg-gray-200 transition-colors text-rose-500"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Нэвтрэх
-                    </button>
-                  </SignInButton>
-                  <SignUpButton>
-                    <button
-                      className="w-full py-2 px-4 mt-2 text-sm rounded-md bg-rose-500 hover:bg-rose-600 transition-colors text-white"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Бүртгүүлэх
-                    </button>
-                  </SignUpButton>
-                </SignedOut>
-              </div>
-            </nav>
-          </div>
-        )}
-      </div>
-
-      <div className="h-9 border-t border-gray-100 border-b shadow-sm hidden md:block">
-        <div className="flex justify-between items-center h-full px-6 lg:max-w-6xl lg:mx-auto">
-          <div
-            className={`${nunito.className} flex items-center space-x-6 text-sm font-medium`}
-          >
-            <Link
-              href="/users"
-              className="hover:text-rose-500 transition-colors"
+                <Search />
+              </span>
+            </span>
+            <div
+              id="rightNavigationIcons"
+              className="flex gap-[16px] text-rose-500 "
             >
-              Users
-            </Link>
-          </div>
-          <div
-            className={`${nunito.className} flex items-center space-x-6 text-sm`}
-          >
-            <div className="hover:text-rose-500 transition-colors">
-              Шинэ бараа
+              <button className="flex justify-center font-3 bg-slate-100 rounded-full h-[40px] w-[40px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="w-4 px;color:#ff3467"
+                  viewBox="0 0 576 512"
+                >
+                  <path
+                    d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8
+                    54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0
+                    208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0
+                    105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 360 480c38.5 0 74.6-9.4 107-25.6
+                    18.1 10.9 41.3 15.7 61.5 15.7 12.8 0 25.2-1.7 38-4.3"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );

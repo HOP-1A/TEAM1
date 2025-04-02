@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Like from "../customComponents/Like";
-import { Clock, Heart } from "lucide-react";
+import { Clock } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 
 export type Listings = {
