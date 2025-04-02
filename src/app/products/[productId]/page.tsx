@@ -1,7 +1,5 @@
 "use client";
-import { Truck } from "lucide-react";
-import { Heart } from "lucide-react";
-import { Share2 } from "lucide-react";
+import { Truck, Heart, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -13,7 +11,6 @@ import { useParams } from "next/navigation";
 import { CartItem } from "@/app/page";
 import { useToast } from "@/hooks/use-toast";
 import Like from "../../../customComponents/Like";
-
 import {
   Select,
   SelectContent,
@@ -21,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 type Listings = {
   id: string;
   categoryId: string;
@@ -41,7 +39,6 @@ const Page = () => {
   const [listing, setListing] = useState<Listings | null>(null);
   const [quantity, setQuantity] = useState<string[]>([]);
   const [quantity1, setQuantity1] = useState<string>("1");
-  console.log(quantity1);
   const { productId } = useParams();
   const { toast } = useToast();
 
@@ -59,6 +56,7 @@ const Page = () => {
 
       setQuantity(quantityArray);
       setListing(data.message);
+      setSelectedProductImg(data.message.productImg[0]);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
@@ -98,82 +96,101 @@ const Page = () => {
     getProduct();
   }, []);
 
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("mn-MN", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
-    <div className="w-screen flex justify-center pt-52">
-      <div className="w-[1200px] font-medium font-sans ">
-        <div className="flex justify-between border-b-2 pb-5 mb-6 text-sm">
-          <div className="">Нийтэлсэн огноо: {listing?.createdAt}</div>
-          <div className="flex">
-            <div className="flex">
-              <Heart className="w-[18px]" />
-              <div className="mr-4 pl-1">Хадгалах</div>
-            </div>
-            <div className="flex">
-              <Share2 className="w-[18px]" />
-              <div className="pl-1">Хуваалцах</div>
-            </div>
-          </div>
+    <div className="w-full min-h-screen flex justify-center pt-20 md:pt-32 px-4 sm:px-6 lg:px-8 pb-12">
+      <div className="w-full max-w-6xl font-sans">
+        <div className="flex justify-between border-b pb-4 mt-10 mb-6 text-sm text-gray-600">
+          <div>Нийтэлсэн огноо: {formatDate(listing?.createdAt)}</div>
         </div>
 
-        <div className="flex">
-          <div className="w-[700px] pr-6">
-            <div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-1/2">
+            <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 mb-4">
               <Dialog>
                 <DialogTrigger asChild>
                   <img
-                    className="w-[660px] h-full"
-                    src={selectProductImg || listing?.productImg[0]}
-                    alt="uploaded"
-                    onClick={() => setSelectedProductImg(selectProductImg)}
+                    className="w-full h-full object-contain cursor-zoom-in"
+                    src={selectProductImg}
+                    alt={listing?.name || "Product image"}
                   />
                 </DialogTrigger>
-                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
-                  <DialogTitle className="text-white"></DialogTitle>
+                <DialogContent className="p-0 max-w-4xl bg-transparent border-none">
                   <img
                     src={selectProductImg}
-                    alt="preview"
-                    className="w-full h-auto "
+                    alt="Product preview"
+                    className="w-full h-auto max-h-[80vh] object-contain"
                   />
                 </DialogContent>
               </Dialog>
             </div>
 
-            <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10 duration-300 ease-in-out">
-              {listing?.productImg.map((productImg, i) => {
-                return (
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {listing?.productImg.map((productImg, i) => (
+                <div
+                  key={i}
+                  className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 cursor-pointer transition-all ${
+                    selectProductImg === productImg
+                      ? "border-rose-500"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                  onClick={() => setSelectedProductImg(productImg)}
+                >
                   <img
-                    key={i}
-                    className="border-white hover:border-rose-500 border-2"
+                    className="w-full h-full object-cover"
                     src={productImg}
-                    alt=""
-                    onClick={() => setSelectedProductImg(productImg)}
+                    alt={`Thumbnail ${i + 1}`}
                   />
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="w-[500px] pl-6">
-            <div className="text-4xl mb-3 flex justify-between">
-              <div>{listing?.name}</div>
-              <div>
-                <Like likedUserId={listing} />
+          <div className="w-full lg:w-1/2">
+            <div className="flex justify-between items-start mb-4">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                {listing?.name}
+              </h1>
+              <Like likedUserId={listing} />
+            </div>
+
+            <div className="text-3xl font-bold text-gray-900 mb-6">
+              {listing?.price} ₮
+            </div>
+
+            {listing?.description && (
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-2">Тайлбар</h2>
+                <p className="text-gray-700">{listing.description}</p>
+              </div>
+            )}
+
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold mb-2">Хүргэлттэй эсэх</h2>
+              <div className="flex items-center p-4 bg-gray-100 rounded-lg gap-3">
+                <div className="flex justify-center items-center rounded-full w-10 h-10 bg-white">
+                  <Truck className="w-5 text-gray-700" />
+                </div>
+                <div className="font-medium">
+                  {listing?.delivery ? "Хүргэлттэй" : "Хүргэлтгүй"}
+                </div>
               </div>
             </div>
-            <div className="text-4xl mb-7">{listing?.price} ₮</div>
-            <div className="flex gap-4">
-              <div className="flex gap-2">
-                <button
-                  onClick={() => addToCart(listing as Listings)}
-                  className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400"
-                >
-                  Сагслах
-                </button>
-              </div>
-              <div>
+
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="w-full sm:w-1/2">
                 <Select onValueChange={(value) => setQuantity1(value)}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Select an option" />
+                  <SelectTrigger className="w-full h-12">
+                    <SelectValue placeholder="Тоо ширхэг сонгох" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
                     {quantity.map((item, i) => (
@@ -184,16 +201,12 @@ const Page = () => {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-
-            <div className="text-2xl mb-3 mt-5">Хүргэлттэй эсэх</div>
-            <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
-              <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
-                <Truck className="w-5" />
-              </div>
-              <div>
-                {listing?.delivery == true ? "Хүргэлттэй" : "Хүргэлтгүй"}
-              </div>
+              <button
+                onClick={() => listing && addToCart(listing)}
+                className="w-full sm:w-1/2 h-12 flex justify-center items-center rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold transition-colors duration-200"
+              >
+                Сагслах
+              </button>
             </div>
           </div>
         </div>

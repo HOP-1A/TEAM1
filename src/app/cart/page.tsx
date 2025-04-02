@@ -22,7 +22,6 @@ const Page = () => {
     const stringCart = localStorage.getItem("cart");
     const data = JSON.parse(stringCart || "[]");
     setCart(data);
-    console.log(data);
   }, []);
 
   const deleteItemFromCart = (id: string) => {
