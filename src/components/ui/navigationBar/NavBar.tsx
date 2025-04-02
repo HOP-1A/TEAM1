@@ -5,9 +5,10 @@ import { ChevronDown, Heart, Instagram, Phone, Search } from "lucide-react";
 import {
   SignInButton,
   SignUpButton,
+  SignedIn,
   SignedOut,
   UserButton,
-} from "@clerk/nextjs";
+} from '@clerk/nextjs'
 
 import { Nunito } from "next/font/google";
 import Link from "next/link";
@@ -165,17 +166,38 @@ export default function NavBar() {
                   </g>
                 </svg>
               </button>
-              <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
+              <div>
+                <SignedOut>
+                  <div className="flex gap-1">
+                  <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
+                    <SignInButton />
+                  </header>
+                  <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
+                    <SignUpButton />
+                  </header>
+                  </div>
+                </SignedOut>
+              </div>
+              {/* <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
                 <SignedOut>
                   <SignInButton />
                 </SignedOut>
               </header>
               <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
                 <SignedOut>
-                  <UserButton />
                   <SignUpButton />
+                  <UserButton />
                 </SignedOut>
-              </header>
+              </header> */}
+
+              <div >
+                <SignedIn>
+                  <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
+                    <UserButton />
+                  </header>
+                </SignedIn>
+              </div>
+
               <button className="flex justify-center rounded-full bg-rose-500 h-[40px] w-[40px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
