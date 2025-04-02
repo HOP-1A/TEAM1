@@ -7,9 +7,6 @@ export const GET = async (req: NextRequest) => {
     where: {
       id,
     },
-    include: {
-      LikeItem: true,
-    },
   });
   if (!product) {
     return NextResponse.json({ error: "Product not found", status: 400 });

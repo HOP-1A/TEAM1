@@ -21,9 +21,6 @@ const nunito = Nunito({
 
 export default function NavBar() {
   const router = useRouter();
-  const redirect = () => {
-    router.push(`/`);
-  };
   return (
     <div id="headerDesktop" className="fixed w-full bg-[white] z-40 top-0">
       <div
@@ -91,11 +88,11 @@ export default function NavBar() {
             id="headerTall"
             className="flex items-center justify-between max-w-[1200px] min-w-[1184px] h-[94px] "
           >
-            <div id="zaryFont" className="flex ">
+            <div id="zaryFont" className="flex cursor-pointer">
               <img
                 src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
                 className="w-[96px h-[43px]"
-                onClick={() => redirect()}
+                onClick={() => router.push(`/`)}
               ></img>
             </div>
             {/* Search tab Search Tab Search Tab */}
@@ -178,18 +175,6 @@ export default function NavBar() {
                   </div>
                 </SignedOut>
               </div>
-              {/* <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-              </header>
-              <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
-                <SignedOut>
-                  <SignUpButton />
-                  <UserButton />
-                </SignedOut>
-              </header> */}
-
               <div >
                 <SignedIn>
                   <header className="flex justify-center bg-slate-200 p-2 rounded-full h-[40px] w-fit">
@@ -198,7 +183,11 @@ export default function NavBar() {
                 </SignedIn>
               </div>
 
-              <button className="flex justify-center rounded-full bg-rose-500 h-[40px] w-[40px]">
+              <button className="flex justify-center rounded-full bg-rose-500 h-[40px] w-[40px]" 
+                onClick={() =>{
+                  router.push(`product/new`)
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-[22px] fill-white"

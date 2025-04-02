@@ -31,15 +31,18 @@ const Home = () => {
     const { toast } = useToast()
 
     useEffect(() =>{
-        toast({
-            title: "Product uploaded",
-            description: Date.now().toString()
-          })
+        if(isAdded){
+            toast({
+                title: "Product uploaded",
+                description: Date.now().toString()
+              })
+        }
     }, [isAdded])
 
     const uploadImages = async () => {
         if (!images) return;
-
+        console.log(images);
+        
         const uploadPromises = Array.from(images).map(async (image) => {
             const formData = new FormData();
             formData.append("file", image);
@@ -65,6 +68,8 @@ const Home = () => {
 
         const uploadedUrls = await Promise.all(uploadPromises);
 
+        console.log(uploadedUrls);
+        
         setUploadedImages(uploadedUrls.filter((url) => url !== null) as string[]);
     };
 
@@ -105,7 +110,9 @@ const Home = () => {
                         </Label>
                         <Input
                             type="file"
+                        
                             className="col-span-3"
+                            multiple={true}
                             onChange={(e) => {
                                 const files = e.target.files;
                                 if (files) {
