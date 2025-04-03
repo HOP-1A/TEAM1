@@ -1,6 +1,4 @@
 "use client";
-
-import { Truck } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";

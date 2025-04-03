@@ -10,6 +10,7 @@ import {
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SearchThing from "../Search";
 import { useState, useEffect } from "react";
 
 const nunito = Nunito({
