@@ -106,7 +106,7 @@ export default function Home() {
         <Carousel
           plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]}
           opts={{ loop: true, align: "start" }}
-          className="w-full h-full"
+          className="w-full h-full mt-[105px]"
         >
           <CarouselContent>
             {img2.map((image, index) => (

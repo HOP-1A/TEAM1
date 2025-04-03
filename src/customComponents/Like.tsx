@@ -10,7 +10,7 @@ const Page = ({ likedUserId }: { likedUserId: any }) => {
   const { toast } = useToast();
   const userId = user?.id;
   const [likes, setLikes] = useState(false);
-
+  console.log(likedUserId);
   useEffect(() => {
     if (
       likedUserId?.LikeItem?.some(
