@@ -61,26 +61,24 @@ const Page = () => {
                 </Button>
               </div>
             </div>
-          ) : (
-            <div>
-              <div className="flex">
-                <div>
-                  <div className="text-3xl font-bold ml-10">
-                    Hadgalsan baraa
-                  </div>
-                  {like.map((cartItem) => {
-                    return (
-                      <div
-                        key={cartItem.id}
-                        className="flex w-[800px] font-medium font-sans gap-3"
-                      >
-                        <div className="flex mt-5 ml-20 w-[700px] h-[120px] border-2 rounded-xl justify-between p-3 items-center">
-                          <div className="flex">
-                            <img
-                              className="flex h-[105px] mr-5 rounded-xl cursor-pointer"
-                              src={cartItem.productImg[0]}
-                            />
-
+          </div>
+        ) : (
+          <div>
+            <div className="flex">
+              <div>
+                <div className="text-3xl font-bold ml-10">Хадгалсан Бараа</div>
+                {like.map((cartItem) => {
+                  return (
+                    <div
+                      key={cartItem.id}
+                      className="flex w-[800px] font-medium font-sans gap-3"
+                    >
+                      <div className="flex mt-5 ml-20 w-[700px] h-[120px] border-2 rounded-xl justify-between p-3 items-center">
+                        <div className="flex">
+                          <img
+                            className="flex h-[105px] mr-5 rounded-xl cursor-pointer"
+                            src={cartItem.productImg[0]}
+                          />
                             <div>
                               <div className="text-xl w-fit truncate font-semibold ">
                                 {cartItem.name}
