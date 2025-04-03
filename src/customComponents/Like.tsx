@@ -5,9 +5,10 @@ import { useUser } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ likedUserId }: any) => {
-  const user = useUser();
+  const { user } = useUser();
+  console.log(user?.id);
   const { toast } = useToast();
-  const userId = user.user?.id;
+  const userId = user?.id;
   const [likes, setLikes] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,6 @@ const Page = ({ likedUserId }: any) => {
       toast({
         title: "Amjilltai",
       });
-      window.location.reload();
     } catch (err) {
       toast({
         title: "Failed",

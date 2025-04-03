@@ -160,6 +160,7 @@ export default function NavBar() {
 
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
             <button
+              onClick={() => router.push("/like")}
               className="p-2 rounded-full hover:bg-gray-100 transition-colors text-rose-500"
               aria-label="Wishlist"
             >
@@ -242,7 +243,7 @@ export default function NavBar() {
               ></input>
               <span
                 id="searchButton"
-                className="w-[80px] h-[40px] flex justify-center items-center text-white w-[80px] h-[40px] size-max rounded-[2px] bg-rose-500"
+                className="w-[80px] h-[40px] flex justify-center items-center text-white size-max rounded-[2px] bg-rose-500"
               >
                 <Search />
               </span>
