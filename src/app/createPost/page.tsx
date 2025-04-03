@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -15,18 +16,30 @@ import {
 } from "@/components/ui/dialog";
 
 export default function AdForm() {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<(File | string)[]>([]);
   const [isClicked, setIsClicked] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedCondition, setSelectedCondition] = useState(null);
-  const [selectedAvailability, setSelectedAvailability] = useState(null);
-  const [selectedDelivery, setSelectedDelivery] = useState(null || "");
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedCondition, setSelectedCondition] = useState("");
+  const [selectedAvailability, setSelectedAvailability] = useState("");
+  const [selectedDelivery, setSelectedDelivery] = useState("");
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     if (images.length >= 12) return;
     const files = Array.from(e.target.files).slice(0, 12 - images.length);
     setImages([...images, ...files]);
   };
+
+  useEffect(() => {
+    // Cleanup object URLs to avoid memory leaks
+    return () => {
+      images.forEach((img) => {
+        if (img instanceof File) {
+          URL.revokeObjectURL(URL.createObjectURL(img));
+        }
+      });
+    };
+  }, [images]);
 
   return (
     <div className="max-w-3xl mx-auto p-8 bg-gray-100 rounded-xl shadow-lg">
@@ -106,28 +119,33 @@ export default function AdForm() {
               <Upload size={20} /> Зураг нэмэх
             </label>
             <div className="grid grid-cols-4 gap-2 mt-2">
-              {images.map((img, index) => (
-                <Dialog key={index}>
-                  <DialogTrigger asChild>
-                    <img
-                      src={URL.createObjectURL(img)}
-                      alt="uploaded"
-                      className="w-20 h-20 object-cover rounded-lg shadow-sm cursor-pointer"
-                      onClick={() => setSelectedImage(URL.createObjectURL(img))}
-                    />
-                  </DialogTrigger>
-                  <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
-                    <DialogTitle className="text-white">
-                      Зургийн дэлгэрэнгүй
-                    </DialogTitle>{" "}
-                    <img
-                      src={selectedImage}
-                      alt="preview"
-                      className="w-full h-auto "
-                    />
-                  </DialogContent>
-                </Dialog>
-              ))}
+              {images.map((img, index) => {
+                const src =
+                  typeof img === "string" ? img : URL.createObjectURL(img);
+
+                return (
+                  <Dialog key={index}>
+                    <DialogTrigger asChild>
+                      <img
+                        src={src}
+                        alt="uploaded"
+                        className="w-20 h-20 object-cover rounded-lg shadow-sm cursor-pointer"
+                        onClick={() => setSelectedImage(src)}
+                      />
+                    </DialogTrigger>
+                    <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
+                      <DialogTitle className="text-white">
+                        Зургийн дэлгэрэнгүй
+                      </DialogTitle>
+                      <img
+                        src={selectedImage}
+                        alt="preview"
+                        className="w-full h-auto"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                );
+              })}
             </div>
           </div>
 

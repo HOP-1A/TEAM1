@@ -1,5 +1,5 @@
 "use client";
-import { prisma } from "@/lib/prisma";
+
 import { Truck } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Share2 } from "lucide-react";
@@ -19,24 +19,6 @@ const Page = () => {
   ];
 
   const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
-  const [pieces, setPieces] = useState("");
-  const [number, setNumber] = useState(1);
-
-  const pluss = () => {
-    if (number == pieces) {
-    } else {
-      const plus = number + 1;
-      setNumber(plus);
-    }
-  };
-
-  const miness = () => {
-    if (number == 1) {
-    } else {
-      const mines = number - 1;
-      setNumber(mines);
-    }
-  };
 
   return (
     <div className="w-screen flex justify-center mt-52">

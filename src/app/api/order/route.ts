@@ -60,6 +60,7 @@ export const GET = async () => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const calculateTotalPrice = (products: any[]) => {
   return products.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
 };

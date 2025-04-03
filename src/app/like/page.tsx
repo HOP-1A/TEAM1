@@ -20,7 +20,7 @@ const Page = () => {
   const getLikedProducts = async () => {
     const likedProduct = await fetch("/api/like?userId=" + user?.id);
     const data = await likedProduct.json();
-    setLike(data.data.map((item: { product: any }) => item.product));
+    setLike(data.data.map((item: { product: unknown }) => item.product));
   };
 
   useEffect(() => {

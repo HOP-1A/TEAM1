@@ -1,18 +1,9 @@
 "use client";
 
-import {
-  ChevronDown,
-  Heart,
-  Instagram,
-  Phone,
-  Search,
-  Menu,
-  X,
-} from "lucide-react";
+import { Heart, Instagram, Phone, Search, Menu, X } from "lucide-react";
 import {
   SignInButton,
   SignUpButton,
-  SignedIn,
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";

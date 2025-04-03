@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
-    const user = await prisma.users.findUnique({
+    const user = await prisma.users.findFirst({
       where: {
         phoneNumber: body.phoneNumber,
       },
