@@ -117,7 +117,7 @@ export default function NavBar() {
           <div className="flex items-center">
             <button
               onClick={() => {
-                router.push("./");
+                router.push("/");
               }}
               className="mr-2 md:mr-4"
             >

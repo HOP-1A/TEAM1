@@ -1,5 +1,5 @@
 "use client";
-import { Truck, Heart, Share2 } from "lucide-react";
+import { Truck } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -28,7 +28,7 @@ type Listings = {
   name: string;
   price: string;
   status: string;
-  quantity: Number;
+  quantity: number;
   updatedAt: string;
   usersId: string;
   delivery: boolean;
@@ -39,12 +39,12 @@ const Page = () => {
   const [listing, setListing] = useState<Listings | null>(null);
   const [quantity, setQuantity] = useState<string[]>([]);
   const [quantity1, setQuantity1] = useState<string>("1");
-  const { productId } = useParams();
+  const { productId } = useParams() as { productId: string };
   const { toast } = useToast();
 
   const getProduct = async () => {
     try {
-      const resJSON = await fetch("/api/product/" + productId, {
+      const resJSON = await fetch(`/api/product/${productId}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -68,11 +68,9 @@ const Page = () => {
     const stringifiedCart = localStorage.getItem("cart");
     const cart: CartItem[] = JSON.parse(stringifiedCart || "[]");
 
-    let coincidedIndex: undefined | number = undefined;
-    cart.map((cartItem, i) => {
-      if (cartItem.id === id) {
-        coincidedIndex = i;
-      }
+    let coincidedIndex: number | undefined = undefined;
+    cart.forEach((cartItem, i) => {
+      if (cartItem.id === id) coincidedIndex = i;
     });
 
     if (coincidedIndex === undefined) {
@@ -160,7 +158,7 @@ const Page = () => {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 {listing?.name}
               </h1>
-              <Like likedUserId={listing} />
+              <Like likedUserId={listing?.usersId} />{" "}
             </div>
 
             <div className="text-3xl font-bold text-gray-900 mb-6">
@@ -187,23 +185,21 @@ const Page = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <div className="w-full sm:w-1/2">
-                <Select onValueChange={(value) => setQuantity1(value)}>
-                  <SelectTrigger className="w-full h-12">
-                    <SelectValue placeholder="Тоо ширхэг сонгох" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white">
-                    {quantity.map((item, i) => (
-                      <SelectItem key={i} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select onValueChange={setQuantity1}>
+                <SelectTrigger className="w-full h-12">
+                  <SelectValue placeholder="Тоо ширхэг сонгох" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  {quantity.map((item, i) => (
+                    <SelectItem key={i} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <button
                 onClick={() => listing && addToCart(listing)}
-                className="w-full sm:w-1/2 h-12 flex justify-center items-center rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold transition-colors duration-200"
+                className="w-full sm:w-1/2 h-12 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg transition"
               >
                 Сагслах
               </button>
