@@ -1,127 +1,134 @@
+
 "use client";
-import { prisma } from "@/lib/prisma";
-import { Truck } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Heart } from "lucide-react";
-import { Share2 } from "lucide-react";
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import router from "next/router";
+import { Button } from "react-day-picker";
+import { Listings } from "../page";
+import { CartItem } from "../page"
+import { useToast } from "@/hooks/use-toast";
+ 
+const ResultsPage = () => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query")?.trim() || "";
 
-const Page = () => {
-  const productImgs = [
-    "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
-    "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
-    "https://pimpkicks.com.ph/cdn/shop/products/NikeDunkLowWhiteBlackMen_s_1024x1024.jpg?v=1618734774",
-  ];
+  const { toast } = useToast();
+  const [like, setLike] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+  const [filteredResults, setFilteredResults] = useState<Listings[]>([]);
+ 
+  const addToCart = (item: Listings) => {
+    const id = item.id;
 
-  const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
-  const [pieces, setPieces] = useState("");
-  const [number, setNumber] = useState(1);
+    const stringifiedCart = localStorage.getItem("cart");
+    const cart: CartItem[] = JSON.parse(stringifiedCart || "[]");
 
-  const pluss = () => {
-    if (number == pieces) {
+    let coincidedIndex: undefined | number = undefined;
+    cart.map((cartItem, i) => {
+      if (cartItem.id === id) {
+        coincidedIndex = i;
+      }
+    });
+
+    if (coincidedIndex === undefined) {
+      cart.push({
+        ...item,
+        quantity: Number(item.quantity),
+      });
     } else {
-      const plus = number + 1;
-      setNumber(plus);
+      cart[coincidedIndex].quantity = cart[coincidedIndex].quantity + 1;
     }
-  };
 
-  const miness = () => {
-    if (number == 1) {
-    } else {
-      const mines = number - 1;
-      setNumber(mines);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    toast({
+      title: "Амжилттай сагслагдлаа",
+    });
+  };
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const res = await fetch("/api/product");
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     }
-  };
-
+ 
+    fetchUsers();
+  }, []);
+ 
+  useEffect(() => {
+    if (data.length > 0) {
+      const filtered = data.filter((item) =>
+        item?.name?.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredResults(filtered);
+    }
+  }, [query, data]);
+ 
   return (
-    <div className="w-screen flex justify-center mt-52">
-      <div className="w-[1200px] font-medium font-sans ">
-        <div className="flex justify-between border-b-2 pb-5 mb-6 text-sm">
-          <div className="">Нийтэлсэн огноо:2025/02/11 12:16</div>
-          <div className="flex">
-            <div className="flex">
-              <Heart className="w-[18px]" />
-              <div className="mr-4 pl-1">Хадгалах</div>
-            </div>
-            <div className="flex">
-              <Share2 className="w-[18px]" />
-              <div className="pl-1">Хуваалцах</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex">
-          <div className="w-[700px] pr-6">
-            <div>
-              <Dialog>
-                <DialogTrigger asChild>
+    <div className="w-full m-auto max-w-[85vw] mt-[200px]">
+    <h2 className=" text-[24px] font-semibold text-left ml-2 sm:ml-4 mb-6">
+      Бүх Бараанууд{" "}
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[30px]">
+      {filteredResults.map((item) => (
+        <Card
+          key={item.id}
+          className="w-[300px] shadow-none rounded-[8px] overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105"
+        >
+          <Carousel>
+            <CarouselContent>
+              {item?.productImg?.map((image, index) => (
+                <CarouselItem key={index}>
                   <img
-                    className="w-[660px] h-full"
-                    src={selectProductImg}
-                    alt="uploaded"
-                    onClick={() => setSelectedProductImg(selectProductImg)}
+                    src={image}
+                    alt={item.name}
+                    className="w-full h-64 object-cover"
                   />
-                </DialogTrigger>
-                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
-                  <DialogTitle className="text-white"></DialogTitle>
-                  <img
-                    src={selectProductImg}
-                    alt="preview"
-                    className="w-full h-auto "
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
 
-            <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10 duration-300 ease-in-out">
-              {productImgs.map((productImg, i) => {
-                return (
-                  <img
-                    key={i}
-                    className="border-white hover:border-rose-500 border-2"
-                    src={productImg}
-                    alt=""
-                    onClick={() => setSelectedProductImg(productImg)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="w-[500px] pl-6">
-            <div className="bg-rose-200 w-20 text-lg flex justify-center items-center rounded-l-sm mb-3 rounded-r-full">
-              Шинэ
-            </div>
-            <div className="text-4xl mb-3">Nike dunk low white/black </div>
-            <div className="text-4xl mb-7">369,000 ₮</div>
-
-            <div className="flex gap-2">
-              <div className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400">
-                Сагслах
+          <CardContent className="p-4 bg-white space-x-2 ">
+            <div className="flex justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 ml-[9px]">
+                  {item.name}
+                </h3>
               </div>
-
-              <div className="flex justify-center items-center w-[245px] h-[50px] rounded-lg bg-rose-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-rose-400">
-                Худалдан авах
+              <div onClick={() => setLike((prev) => !prev)}>
+                <Heart />
               </div>
             </div>
 
-            <div className="text-2xl mb-3 mt-5">Хүргэлттэй</div>
-            <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
-              <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
-                <Truck className="w-5" />
-              </div>
-              <div>Хүргэлттэй</div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <p className="text-gray-600 mb-[8px]">{item.price}₮</p>
+            <Button
+              className="rounded-[1vh] bg-blue-300 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+              onClick={() => router.push(`/products/${item.id}`)}
+            >
+              Дэлгэрэнгүй
+            </Button>
+
+            <Button
+              onClick={() => addToCart(item)}
+              className="rounded-[1vh] bg-pink-400 text-white-600/100 dark:text-sky-400/100 font-bold cursor-pointer hover:shadow-xl"
+            >
+              Сагслах
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
     </div>
+  </div>
   );
 };
-
-export default Page;
+ 
+export default ResultsPage;
+ 
+ 

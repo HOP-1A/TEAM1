@@ -59,6 +59,7 @@ export default function Home() {
     "https://cdn.cody.mn/img/331665/4600x0xwebp/banner_13banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
     "https://cdn.cody.mn/img/331675/4600x0xwebp/banner_25banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
   ];
+  
   const addToCart = (item: Listings) => {
     const id = item.id;
 

@@ -12,6 +12,7 @@ import {
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SearchThing from "../Search";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -100,22 +101,11 @@ export default function NavBar() {
             {/* Search tab Search Tab Search Tab */}
             <div
               id="searchContainer"
-              className="flex place-content-between content-center relative border-[2px] border-rose-500 w-[600px] h-[44px] rounded-[6px]"
+              className="flex place-content-between content-center relative border-[2px] border-rose-500 w-[600px] h-[44px]"
             >
-              <div
-                id="searchCategory"
-                className={`${nunito.className} flex items-center px-[10px] w-[120px] h-[36px] bg-slate-100 rounded-[6px] min-w-[160px] m-[2px] text-[14px]`}
-              >
-                <button className="flex w-[136px]">Бүх ангилал</button>
-                <button>
-                  <ChevronDown className="w-[14px] h-[14px] " />
-                </button>
-              </div>
               <span className="flex h-[40px] rounded-md pl-[10px] ">
-                <input
-                  className="w-[338px] h-[40px] text-ellipsis"
-                  placeholder="Барааны нэр, зарын дугаар, түлхүүр үг,  утасны д...."
-                ></input>
+                <SearchThing
+                />
                 <span id="searchButton" className="w-[80px] h-[40px] ">
                   <div className="flex justify-center items-center text-white w-[80px] h-[40px] size-max rounded-[2px] bg-rose-500">
                     <Search />
