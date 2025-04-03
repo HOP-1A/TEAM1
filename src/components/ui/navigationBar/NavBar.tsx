@@ -11,6 +11,7 @@ import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import SearchThing from "../Search";
 
 const nunito = Nunito({
   subsets: ["latin"],
