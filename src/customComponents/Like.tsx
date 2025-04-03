@@ -37,7 +37,7 @@ const Page = ({ likedUserId }: { likedUserId: any }) => {
       });
 
       toast({
-        title: "Amjilltai",
+        title: "Амжилттай",
       });
       window.location.reload();
     } catch {

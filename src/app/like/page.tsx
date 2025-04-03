@@ -56,7 +56,7 @@ const Page = () => {
           <div>
             <div className="flex">
               <div>
-                <div className="text-3xl font-bold ml-10">Hadgalsan baraa</div>
+                <div className="text-3xl font-bold ml-10">Хадгалсан Бараа</div>
                 {like.map((cartItem) => {
                   return (
                     <div

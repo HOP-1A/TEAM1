@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBasket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import { useToast } from "@/hooks/use-toast";
 
 const Page = () => {
   const user = useUser();
   const userId = user.user?.id;
   const router = useRouter();
-
+  const { toast } = useToast();
   const redirect = () => {
     router.push(`/`);
   };
@@ -56,7 +57,9 @@ const Page = () => {
     if (data.message == "Success") {
       localStorage.setItem("cart", "[]");
       setCart([]);
-      alert("Purchased");
+      toast({
+        title: "Амжилттай",
+      });
     } else {
       alert("Failed to order");
     }
@@ -167,7 +170,7 @@ const Page = () => {
                     onClick={orderItem}
                     className="w-[388px] h-14 bg-gray-100 rounded-xl mt-4"
                   >
-                    Төлбөрийн нөхцөл сонгох
+                    Худалдаж Авах
                   </button>
                 </div>
               </div>

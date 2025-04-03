@@ -35,7 +35,7 @@ const Page = () => {
             </div>
           </div>
           <button className="w-[388px] h-14 bg-gray-100 rounded-xl mt-4">
-            Төлбөрийн нөхцөл сонгох
+            Худалдаж Авах
           </button>
         </div>
       </div>
