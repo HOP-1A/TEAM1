@@ -148,23 +148,6 @@ export default function Home() {
                     alt={"Promo"}
                     className="w-full h-full object-cover"
                   />
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="container mx-auto px-4 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {img1.map((image, index) => (
-                <div
-                  key={index}
-                  className="relative rounded-xl overflow-hidden h-36 md:h-48"
-                >
-                  <img
-                    src={image}
-                    alt={"Promo"}
-                    className="w-full h-full object-cover"
-                  />
                   <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex items-center pl-4">
                     <div>
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2">
