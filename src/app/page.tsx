@@ -10,8 +10,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Like from "../customComponents/Like";
-import { Clock } from "lucide-react";
+import { Clock, ShoppingCart, Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
+import { Button } from "@/components/ui/button";
 
 export type Listings = {
   id: string;
@@ -38,20 +39,20 @@ export default function Home() {
   const [userId, setUserId] = useState("");
   const [likes, setLikes] = useState([]);
   const [listings, setListings] = useState<Listings[]>([]);
-  const img1 = [
+
+  const img2 = [
     "https://cdn.cody.mn/img/334304/4600x0xwebp/kahi_post_4.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
     "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
     "https://cdn.cody.mn/img/334305/4600x0xwebp/cycle_9.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
   ];
-  const img2 = [
+
+  const img1 = [
     "https://cdn.cody.mn/img/334309/4600x0xwebp/spring_post_8_banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
-    "https://cdn.cody.mn/img/324023/4600x0xwebp/banner_09banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
-  ];
-  const img3 = [
     "https://cdn.cody.mn/img/331665/4600x0xwebp/banner_13banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
-    "https://cdn.cody.mn/img/331675/4600x0xwebp/banner_25banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
   ];
-  const addToCart = (item: Listings) => {
+
+  const addToCart = (item: Listings, e: React.MouseEvent) => {
+    e.stopPropagation();
     const id = item.id;
 
     const stringifiedCart = localStorage.getItem("cart");
@@ -76,6 +77,7 @@ export default function Home() {
     localStorage.setItem("cart", JSON.stringify(cart));
     toast({
       title: "Амжилттай сагслагдлаа",
+      description: `${item.name} сагсанд нэмэгдлээ`,
     });
   };
 
@@ -101,167 +103,146 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center mt-[200px] ">
-      <div className="w-[1300px]">
-        <div className="flex">
-          <div>
-            <Carousel
-              plugins={[
-                Autoplay({
-                  delay: 2000,
-                  stopOnInteraction: false,
-                }),
-              ]}
-              opts={{
-                loop: true,
-                align: "start",
-              }}
+    <div className="bg-gray-50 min-h-screen">
+      <section className="relative w-full h-[300px] md:h-[500px]">
+        <Carousel
+          plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]}
+          opts={{ loop: true, align: "start" }}
+          className="w-full h-full"
+        >
+          <CarouselContent>
+            {img2.map((image, index) => (
+              <CarouselItem key={index}>
+                <div className="relative w-full h-[300px] md:h-[500px]">
+                  <img
+                    src={image}
+                    alt={`Hero ${index + 1}`}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
+
+      <section className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {img1.map((image, index) => (
+            <div
+              key={index}
+              className="relative rounded-xl overflow-hidden h-36 md:h-48"
             >
-              <CarouselContent>
-                {img1.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <img
-                      src={image}
-                      alt={"img1"}
-                      className="h-[404px] w-[900px] object-cover rounded-[20px] shadow-none px-[8px]"
-                      loading="lazy"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
-          <div className="px-[4px] flex flex-col gap-[4px]">
-            <Carousel
-              plugins={[
-                Autoplay({
-                  delay: 3000,
-                  stopOnInteraction: false,
-                }),
-              ]}
-              opts={{
-                loop: true,
-                align: "start",
-              }}
-            >
-              <CarouselContent>
-                {img2.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <img
-                      src={image}
-                      alt={"img1"}
-                      className="h-[200px] w-[600px] object-cover rounded-[8px] shadow-none"
-                      loading="lazy"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-            <Carousel
-              plugins={[
-                Autoplay({
-                  delay: 3000,
-                  stopOnInteraction: false,
-                }),
-              ]}
-              opts={{
-                loop: true,
-                align: "start",
-              }}
-            >
-              <CarouselContent>
-                {img3.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <img
-                      src={image}
-                      alt={"img1"}
-                      className="h-[200px] w-[600px] object-cover rounded-[8px] shadow-none"
-                      loading="lazy"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
+              <img
+                src={image}
+                alt={"Promo"}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex items-center pl-4">
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                    {index === 0 ? "Хавар улиралд зориулсан" : "Онцгой хямдрал"}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="w-full max-w-[85vw] mt-10">
-          <h2 className="text-[24px] font-semibold text-left ml-2 sm:ml-4 mb-6">
-            Бүх Бараанууд
+      </section>
+
+      <section id="products" className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+            Онцлох бүтээгдэхүүнүүд
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[30px]">
-            {listings.map((item) => (
-              <Card
-                key={item.id}
-                className="w-[300px] shadow-sm rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-gray-200"
-                onClick={() => router.push(`/products/${item.id}`)}
-              >
-                <div className="relative">
-                  <Carousel
-                    plugins={[
-                      Autoplay({
-                        delay: 5000,
-                        stopOnInteraction: false,
-                      }),
-                    ]}
-                    opts={{
-                      loop: true,
-                      align: "start",
-                    }}
-                  >
-                    <CarouselContent>
-                      {item?.productImg?.map((image, index) => (
-                        <CarouselItem key={index}>
-                          <div className="relative aspect-square">
-                            <img
-                              src={image}
-                              alt={item.name}
-                              className="w-full h-72 object-cover"
-                              loading="lazy"
-                            />
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    {item.productImg.length > 1 && (
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
-                    )}
-                  </Carousel>
+          <Button
+            variant="ghost"
+            className="text-primary hover:bg-primary/10 text-sm md:text-base"
+            onClick={() => router.push("/products")}
+          >
+            Бүгдийг үзэх
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {listings.map((item) => (
+            <Card
+              key={item.id}
+              className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-primary/20"
+              onClick={() => router.push(`/products/${item.id}`)}
+            >
+              <div className="relative aspect-square">
+                <Carousel
+                  plugins={[
+                    Autoplay({ delay: 5000, stopOnInteraction: false }),
+                  ]}
+                  opts={{ loop: true, align: "start" }}
+                >
+                  <CarouselContent>
+                    {item?.productImg?.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <img
+                          src={image}
+                          alt={item.name}
+                          className="w-full h-56 md:h-72 object-cover"
+                          loading="lazy"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+
+                <Button
+                  size="sm"
+                  className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary hover:bg-primary-dark"
+                  onClick={(e) => addToCart(item, e)}
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Сагслах
+                </Button>
+              </div>
+
+              <CardContent className="p-3 space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="space-y-1">
+                    <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
+                      {item.name}
+                    </h3>
+                    <div className="flex items-center text-gray-500 text-xs">
+                      <Clock className="w-3 h-3 mr-1" />
+                      <span>
+                        {new Date(item.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                  <Like likedUserId={item} />
                 </div>
 
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-1">
-                      <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
-                        {item.name}
-                      </h3>
-                      <div className="flex items-center text-gray-500 text-sm">
-                        <Clock className="w-3 h-3 mr-1" />
-                        <span>
-                          {new Date(item.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            }
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    <Like likedUserId={item} />
+                <div className="flex justify-between items-center">
+                  <p className="text-lg font-bold text-gray-900">
+                    {Number(item.price).toLocaleString()}₮
+                  </p>
+                  <div className="flex items-center bg-primary/10 px-2 py-1 rounded-full">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
+                    <span className="text-sm font-medium">4.8</span>
                   </div>
+                </div>
 
-                  <div className="flex justify-between items-center">
-                    <p className="text-lg font-bold text-gray-900">
-                      {Number(item.price).toLocaleString()}₮
-                    </p>
+                {item.delivery && (
+                  <div className="text-xs text-green-600 font-medium">
+                    Хүргэлттэй
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
