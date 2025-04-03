@@ -28,7 +28,7 @@ type Listings = {
   name: string;
   price: string;
   status: string;
-  quantity: number; // FIXED: Changed `Number` to `number`
+  quantity: number;
   updatedAt: string;
   usersId: string;
   delivery: boolean;
@@ -39,7 +39,7 @@ const Page = () => {
   const [listing, setListing] = useState<Listings | null>(null);
   const [quantity, setQuantity] = useState<string[]>([]);
   const [quantity1, setQuantity1] = useState<string>("1");
-  const { productId } = useParams() as { productId: string }; // FIXED: Explicitly typing `productId`
+  const { productId } = useParams() as { productId: string };
   const { toast } = useToast();
 
   const getProduct = async () => {
@@ -112,7 +112,6 @@ const Page = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Product Images */}
           <div className="w-full lg:w-1/2">
             <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 mb-4">
               <Dialog>
@@ -133,7 +132,6 @@ const Page = () => {
               </Dialog>
             </div>
 
-            {/* Thumbnails */}
             <div className="flex gap-2 overflow-x-auto pb-2">
               {listing?.productImg.map((productImg, i) => (
                 <div
@@ -155,21 +153,18 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Product Info */}
           <div className="w-full lg:w-1/2">
             <div className="flex justify-between items-start mb-4">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 {listing?.name}
               </h1>
               <Like likedUserId={listing?.usersId} />{" "}
-              {/* FIXED: Pass correct prop */}
             </div>
 
             <div className="text-3xl font-bold text-gray-900 mb-6">
               {listing?.price} ₮
             </div>
 
-            {/* Description */}
             {listing?.description && (
               <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-2">Тайлбар</h2>
@@ -177,7 +172,6 @@ const Page = () => {
               </div>
             )}
 
-            {/* Delivery */}
             <div className="mb-6">
               <h2 className="text-lg font-semibold mb-2">Хүргэлттэй эсэх</h2>
               <div className="flex items-center p-4 bg-gray-100 rounded-lg gap-3">
@@ -190,7 +184,6 @@ const Page = () => {
               </div>
             </div>
 
-            {/* Quantity & Add to Cart */}
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Select onValueChange={setQuantity1}>
                 <SelectTrigger className="w-full h-12">
