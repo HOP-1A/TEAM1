@@ -6,11 +6,10 @@ import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ likedUserId }: any) => {
   const { user } = useUser();
-  console.log(user?.id);
   const { toast } = useToast();
   const userId = user?.id;
   const [likes, setLikes] = useState(false);
-
+  console.log(likedUserId);
   useEffect(() => {
     if (likedUserId?.LikeItem?.some((like: any) => like.usersId === userId)) {
       setLikes(true);

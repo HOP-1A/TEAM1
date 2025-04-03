@@ -2,7 +2,7 @@
 
 function Footer() {
   return (
-    <div className="w-full mt-10 max-h-screen">
+    <div className="w-full mt-10 absolute bottom-0">
       <footer
         className="flex flex-col items-center w-full text-white pt-12 pb-5"
         style={{ backgroundColor: "#FF3476" }}

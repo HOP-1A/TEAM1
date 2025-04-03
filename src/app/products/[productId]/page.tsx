@@ -158,7 +158,7 @@ const Page = () => {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 {listing?.name}
               </h1>
-              <Like likedUserId={listing?.usersId} />{" "}
+              <Like likedUserId={listing} />{" "}
             </div>
 
             <div className="text-3xl font-bold text-gray-900 mb-6">
