@@ -22,7 +22,8 @@ const formSchema = z.object({
   remindPhone: z.boolean().default(false).optional(),
 });
 
-const handleRequest = (items: z.infer<typeof formSchema>) => {};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const handleRequest = (_items: z.infer<typeof formSchema>) => {};
 export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

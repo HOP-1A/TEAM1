@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [phoneNumb, setPhoneNumb] = useState("");
+  console.log(phoneNumb);
   const [hidePass, setHidePass] = useState(true);
   const [info, setInfo] = useState(true);
   const [product, setProduct] = useState(false);

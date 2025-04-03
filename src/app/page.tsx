@@ -36,8 +36,6 @@ export type CartItem = {
 
 export default function Home() {
   const { toast } = useToast();
-  const [userId, setUserId] = useState("");
-  const [likes, setLikes] = useState([]);
   const [listings, setListings] = useState<Listings[]>([]);
 
   const img2 = [

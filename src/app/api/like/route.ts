@@ -1,4 +1,3 @@
-import Product from "@/components/product";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 

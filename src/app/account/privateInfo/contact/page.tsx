@@ -11,7 +11,6 @@ import {
   Phone,
   Mail,
   CircleCheck,
-  CircleX,
   CircleAlert,
 } from "lucide-react";
 

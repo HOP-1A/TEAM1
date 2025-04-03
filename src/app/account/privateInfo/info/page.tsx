@@ -17,7 +17,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -29,7 +28,6 @@ import {
   LogOut,
   CircleUserRound,
   UserRound,
-  User,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

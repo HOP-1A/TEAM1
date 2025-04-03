@@ -4,22 +4,26 @@ import { Heart } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
 
-const Page = ({ likedUserId }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Page = ({ likedUserId }: { likedUserId: any }) => {
   const { user } = useUser();
-  console.log(user?.id);
   const { toast } = useToast();
   const userId = user?.id;
   const [likes, setLikes] = useState(false);
 
   useEffect(() => {
-    if (likedUserId?.LikeItem?.some((like: any) => like.usersId === userId)) {
+    if (
+      likedUserId?.LikeItem?.some(
+        (like: { usersId: string | undefined }) => like.usersId === userId
+      )
+    ) {
       setLikes(true);
     } else {
       setLikes(false);
     }
   }, [likedUserId, userId]);
 
-  const likeProduct = async (likedUserId: any) => {
+  const likeProduct = async (likedUserId: { id: string }) => {
     try {
       await fetch("/api/like", {
         method: "POST",
@@ -35,7 +39,8 @@ const Page = ({ likedUserId }: any) => {
       toast({
         title: "Amjilltai",
       });
-    } catch (err) {
+      window.location.reload();
+    } catch {
       toast({
         title: "Failed",
       });
