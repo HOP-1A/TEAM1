@@ -125,12 +125,7 @@ export default function NavBar() {
             className="hidden md:flex flex-1 max-w-xl mx-4"
           >
             <div className="relative w-full">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-10 px-4 pr-16 rounded-l-md border border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300"
-                placeholder="Барааны нэр, зарын дугаар..."
+              <SearchThing
               />
               <button
                 type="submit"
