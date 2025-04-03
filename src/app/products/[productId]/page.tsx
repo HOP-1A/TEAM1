@@ -30,6 +30,7 @@ type Listings = {
 };
 
 const Page = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
   const [quantity, setQuantity] = useState<string[]>([]);
@@ -87,6 +88,7 @@ const Page = () => {
 
   useEffect(() => {
     getProduct();
+    setLoading(false);
   }, []);
 
   const formatDate = (dateString?: string) => {
@@ -101,107 +103,115 @@ const Page = () => {
 
   return (
     <div className="w-full min-h-screen flex justify-center pt-20 md:pt-32 px-4 sm:px-6 lg:px-8 pb-12">
-      <div className="w-full max-w-6xl font-sans">
-        <div className="flex justify-between border-b pb-4 mt-10 mb-6 text-sm text-gray-600">
-          <div>Нийтэлсэн огноо: {formatDate(listing?.createdAt)}</div>
+      {loading == true ? (
+        <div className="flex-col gap-4 w-full flex items-center justify-center mt-72">
+          <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full">
+            <div className="w-16 h-16 border-4 border-transparent text-rose-500 text-2xl animate-spin flex items-center justify-center border-t-rose-500 rounded-full"></div>
+          </div>
         </div>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-1/2">
-            <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 mb-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <img
-                    className="w-full h-full object-contain cursor-zoom-in"
-                    src={selectProductImg}
-                    alt={listing?.name || "Product image"}
-                  />
-                </DialogTrigger>
-                <DialogContent className="p-0 max-w-4xl bg-transparent border-none">
-                  <img
-                    src={selectProductImg}
-                    alt="Product preview"
-                    className="w-full h-auto max-h-[80vh] object-contain"
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {listing?.productImg.map((productImg, i) => (
-                <div
-                  key={i}
-                  className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 cursor-pointer transition-all ${
-                    selectProductImg === productImg
-                      ? "border-rose-500"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
-                  onClick={() => setSelectedProductImg(productImg)}
-                >
-                  <img
-                    className="w-full h-full object-cover"
-                    src={productImg}
-                    alt={`Thumbnail ${i + 1}`}
-                  />
-                </div>
-              ))}
-            </div>
+      ) : (
+        <div className="w-full max-w-6xl font-sans">
+          <div className="flex justify-between border-b pb-4 mt-10 mb-6 text-sm text-gray-600">
+            <div>Нийтэлсэн огноо: {formatDate(listing?.createdAt)}</div>
           </div>
 
-          <div className="w-full lg:w-1/2">
-            <div className="flex justify-between items-start mb-4">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                {listing?.name}
-              </h1>
-              <Like likedUserId={listing?.usersId} />{" "}
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="w-full lg:w-1/2">
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 mb-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <img
+                      className="w-full h-full object-contain cursor-zoom-in"
+                      src={selectProductImg}
+                      alt={listing?.name || "Product image"}
+                    />
+                  </DialogTrigger>
+                  <DialogContent className="p-0 max-w-4xl bg-transparent border-none">
+                    <img
+                      src={selectProductImg}
+                      alt="Product preview"
+                      className="w-full h-auto max-h-[80vh] object-contain"
+                    />
+                  </DialogContent>
+                </Dialog>
+              </div>
+
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {listing?.productImg.map((productImg, i) => (
+                  <div
+                    key={i}
+                    className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 cursor-pointer transition-all ${
+                      selectProductImg === productImg
+                        ? "border-rose-500"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    onClick={() => setSelectedProductImg(productImg)}
+                  >
+                    <img
+                      className="w-full h-full object-cover"
+                      src={productImg}
+                      alt={`Thumbnail ${i + 1}`}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="text-3xl font-bold text-gray-900 mb-6">
-              {listing?.price} ₮
-            </div>
+            <div className="w-full lg:w-1/2">
+              <div className="flex justify-between items-start mb-4">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  {listing?.name}
+                </h1>
+                <Like likedUserId={listing?.usersId} />{" "}
+              </div>
 
-            {listing?.description && (
+              <div className="text-3xl font-bold text-gray-900 mb-6">
+                {listing?.price} ₮
+              </div>
+
+              {listing?.description && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-semibold mb-2">Тайлбар</h2>
+                  <p className="text-gray-700">{listing.description}</p>
+                </div>
+              )}
+
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Тайлбар</h2>
-                <p className="text-gray-700">{listing.description}</p>
-              </div>
-            )}
-
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold mb-2">Хүргэлттэй эсэх</h2>
-              <div className="flex items-center p-4 bg-gray-100 rounded-lg gap-3">
-                <div className="flex justify-center items-center rounded-full w-10 h-10 bg-white">
-                  <Truck className="w-5 text-gray-700" />
-                </div>
-                <div className="font-medium">
-                  {listing?.delivery ? "Хүргэлттэй" : "Хүргэлтгүй"}
+                <h2 className="text-lg font-semibold mb-2">Хүргэлттэй эсэх</h2>
+                <div className="flex items-center p-4 bg-gray-100 rounded-lg gap-3">
+                  <div className="flex justify-center items-center rounded-full w-10 h-10 bg-white">
+                    <Truck className="w-5 text-gray-700" />
+                  </div>
+                  <div className="font-medium">
+                    {listing?.delivery ? "Хүргэлттэй" : "Хүргэлтгүй"}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Select onValueChange={setQuantity1}>
-                <SelectTrigger className="w-full h-12">
-                  <SelectValue placeholder="Тоо ширхэг сонгох" />
-                </SelectTrigger>
-                <SelectContent className="bg-white">
-                  {quantity.map((item, i) => (
-                    <SelectItem key={i} value={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <button
-                onClick={() => listing && addToCart(listing)}
-                className="w-full sm:w-1/2 h-12 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg transition"
-              >
-                Сагслах
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <Select onValueChange={setQuantity1}>
+                  <SelectTrigger className="w-full h-12">
+                    <SelectValue placeholder="Тоо ширхэг сонгох" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {quantity.map((item, i) => (
+                      <SelectItem key={i} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <button
+                  onClick={() => listing && addToCart(listing)}
+                  className="w-full sm:w-1/2 h-12 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg transition"
+                >
+                  Сагслах
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
