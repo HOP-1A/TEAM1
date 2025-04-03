@@ -48,9 +48,8 @@ export default function Home() {
     "https://cdn.cody.mn/img/334309/4600x0xwebp/spring_post_8_banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
     "https://cdn.cody.mn/img/331665/4600x0xwebp/banner_13banner.jpg?h=c2a85144d77b7e5f906de9dcb1b70c78c4a3b0df",
   ];
-
-  const addToCart = (item: Listings, e: React.MouseEvent) => {
-    e.stopPropagation();
+  
+  const addToCart = (item: Listings) => {
     const id = item.id;
 
     const stringifiedCart = localStorage.getItem("cart");
@@ -194,7 +193,7 @@ export default function Home() {
                 <Button
                   size="sm"
                   className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary hover:bg-primary-dark"
-                  onClick={(e) => addToCart(item, e)}
+                  onClick={(e) => addToCart(item)}
                 >
                   <ShoppingCart className="w-4 h-4 mr-2" />
                   Сагслах
