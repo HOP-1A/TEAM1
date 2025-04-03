@@ -243,7 +243,7 @@ export default function NavBar() {
               ></input>
               <span
                 id="searchButton"
-                className="w-[80px] h-[40px] flex justify-center items-center text-white w-[80px] h-[40px] size-max rounded-[2px] bg-rose-500"
+                className="w-[80px] h-[40px] flex justify-center items-center text-white size-max rounded-[2px] bg-rose-500"
               >
                 <Search />
               </span>
