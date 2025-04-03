@@ -168,7 +168,6 @@ export default function Home() {
             <Card
               key={item.id}
               className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-primary/20"
-              onClick={() => router.push(`/products/${item.id}`)}
             >
               <div className="relative aspect-square">
                 <Carousel
@@ -185,6 +184,7 @@ export default function Home() {
                           alt={item.name}
                           className="w-full h-56 md:h-72 object-cover"
                           loading="lazy"
+                          onClick={() => router.push(`/products/${item.id}`)}
                         />
                       </CarouselItem>
                     ))}
