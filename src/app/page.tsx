@@ -169,7 +169,7 @@ export default function Home() {
               </h2>
               <Button
                 variant="ghost"
-                className="text-primary hover:bg-primary/10 text-sm md:text-base"
+                className="text-white bg-rose-500 hover:bg-primary/10 text-sm md:text-base"
                 onClick={() => router.push("/products")}
               >
                 Бүгдийг үзэх

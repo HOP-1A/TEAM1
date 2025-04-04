@@ -1,109 +1,188 @@
 "use client";
-
-import { Truck } from "lucide-react";
-import { Heart } from "lucide-react";
-import { Share2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { Clock, Heart, ShoppingCart, Star } from "lucide-react";
+import  { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Listings } from "../page";
+import { CartItem } from "../page";
+import { useToast } from "@/hooks/use-toast";
+import Like from "@/customComponents/Like";
+import Autoplay from "embla-carousel-autoplay";
+import { Checkbox } from "@/components/ui/checkbox"
 
-const Page = () => {
-  const productImgs = [
-    "https://s.yimg.com/ny/api/res/1.2/vv7kmbot.cpkenRagWepCg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/footwear_news_642/14146f13e8fbc25d2f1b5f2e7a752d52",
-    "https://lspersonalshopper.co.uk/cdn/shop/products/IMG_6768_1200x.jpg?v=1633891743",
-    "https://pimpkicks.com.ph/cdn/shop/products/NikeDunkLowWhiteBlackMen_s_1024x1024.jpg?v=1618734774",
-  ];
+ 
+const ResultsPage = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query")?.trim() || "";
+ 
+  const [isFiltered, setIsFiltered] = useState(false)
+  const { toast } = useToast();
+  const [like, setLike] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+  const [filteredResults, setFilteredResults] = useState<Listings[]>([]);
+ 
+  const addToCart = (item: Listings) => {
+    const id = item.id;
+ 
+    const stringifiedCart = localStorage.getItem("cart");
+    const cart: CartItem[] = JSON.parse(stringifiedCart || "[]");
+ 
+    let coincidedIndex: undefined | number = undefined;
+    cart.map((cartItem, i) => {
+      if (cartItem.id === id) {
+        coincidedIndex = i;
+      }
+    });
+ 
+    if (coincidedIndex === undefined) {
+      cart.push({
+        ...item,
+        quantity: Number(item.quantity),
+      });
+    } else {
+      cart[coincidedIndex].quantity = cart[coincidedIndex].quantity + 1;
+    }
+ 
+    localStorage.setItem("cart", JSON.stringify(cart));
+    toast({
+      title: "Амжилттай сагслагдлаа",
+    });
+  };
+  const filterAvailable = () => {
+    if (isFiltered) {
+      setFilteredResults(data);
+    } else {
+      const availableItems = data.filter(item => item.delivery === true);
+      setFilteredResults(availableItems);
+    }
+    setIsFiltered(!isFiltered);
+  };
 
-  const [selectProductImg, setSelectedProductImg] = useState(productImgs[0]);
+  
 
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const res = await fetch("/api/product");
+        const data = await res.json();
+        setData(data);
+
+      } catch (error) {
+      }
+    }
+ 
+    fetchUsers();
+  }, []);
+ 
+  useEffect(() => {
+    if (data.length > 0) {
+      const filtered = data.filter((item) =>
+        item?.name?.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredResults(filtered);
+    }
+  }, [query, data]);
+ 
   return (
-    <div className="w-screen flex justify-center mt-52">
-      <div className="w-[1200px] font-medium font-sans ">
-        <div className="flex justify-between border-b-2 pb-5 mb-6 text-sm">
-          <div className="">Нийтэлсэн огноо:2025/02/11 12:16</div>
-          <div className="flex">
-            <div className="flex">
-              <Heart className="w-[18px]" />
-              <div className="mr-4 pl-1">Хадгалах</div>
-            </div>
-            <div className="flex">
-              <Share2 className="w-[18px]" />
-              <div className="pl-1">Хуваалцах</div>
-            </div>
-          </div>
-        </div>
+    <section id="products" className="mt-[200px] container mx-auto px-4 py-8">
+    <div className="flex justify-between items-center mb-6">
+      <div>
+      <h2 className="flex text-xl md:text-2xl mb-[30px] text-gray-900">
+        Хайсан бүтээгдэхүүн :
+      </h2>
+      <div className="h-auto w-[240px]">
+  <div className="flex flex-row items-center h-auto">
+    <Checkbox onClick={filterAvailable} className="flex  text-black" />
+    <span className="ml-2 text-black">Availability</span>
+  </div>
+</div>
 
-        <div className="flex">
-          <div className="w-[700px] pr-6">
-            <div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <img
-                    className="w-[660px] h-full"
-                    src={selectProductImg}
-                    alt="uploaded"
-                    onClick={() => setSelectedProductImg(selectProductImg)}
-                  />
-                </DialogTrigger>
-                <DialogContent className="p-0 max-w-2xl bg-opacity-0 border-none">
-                  <DialogTitle className="text-white"></DialogTitle>
-                  <img
-                    src={selectProductImg}
-                    alt="preview"
-                    className="w-full h-auto "
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            <div className="w-[150px] h-[90px] mt-6 flex gap-3 mb-10 duration-300 ease-in-out">
-              {productImgs.map((productImg, i) => {
-                return (
-                  <img
-                    key={i}
-                    className="border-white hover:border-rose-500 border-2"
-                    src={productImg}
-                    alt=""
-                    onClick={() => setSelectedProductImg(productImg)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="w-[500px] pl-6">
-            <div className="bg-rose-200 w-20 text-lg flex justify-center items-center rounded-l-sm mb-3 rounded-r-full">
-              Шинэ
-            </div>
-            <div className="text-4xl mb-3">Nike dunk low white/black </div>
-            <div className="text-4xl mb-7">369,000 ₮</div>
-
-            <div className="flex gap-2">
-              <div className="flex justify-center items-center rounded-lg w-[245px] h-[50px] bg-sky-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-sky-400">
-                Сагслах
-              </div>
-
-              <div className="flex justify-center items-center w-[245px] h-[50px] rounded-lg bg-rose-500 text-white text-lg font-bold cursor-pointer hover:shadow-xl hover:bg-rose-400">
-                Худалдан авах
-              </div>
-            </div>
-
-            <div className="text-2xl mb-3 mt-5">Хүргэлттэй</div>
-            <div className="flex items-center w-[478px] h-[70px] bg-gray-200 rounded-xl pl-8 gap-2 cursor-pointer">
-              <div className="flex justify-center items-center rounded-3xl w-9 h-9 bg-white">
-                <Truck className="w-5" />
-              </div>
-              <div>Хүргэлттэй</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  );
-};
-
-export default Page;
+ 
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {filteredResults.map((item) => (
+        <Card
+          key={item.id}
+          className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-primary/20"
+          onClick={() => router.push(`/products/${item.id}`)}
+        >
+          <div className="relative aspect-square">
+            <Carousel
+              plugins={[
+                Autoplay({ delay: 5000, stopOnInteraction: false }),
+              ]}
+              opts={{ loop: true, align: "start" }}
+            >
+              <CarouselContent>
+                {item?.productImg?.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <img
+                      src={image}
+                      alt={item.name}
+                      className="w-full h-56 md:h-72 object-cover"
+                      loading="lazy"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+ 
+            <Button
+              className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary hover:bg-primary-dark"
+              onClick={(e) => addToCart(item)}
+            >
+              <ShoppingCart className="w-4 h-4 mr-2" />
+              Сагслах
+            </Button>
+          </div>
+ 
+          <CardContent className="p-3 space-y-2">
+            <div className="flex justify-between items-start">
+              <div className="space-y-1">
+                <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
+                  {item.name}
+                </h3>
+                <div className="flex items-center text-gray-500 text-xs">
+                  <Clock className="w-3 h-3 mr-1" />
+                  <span>
+                    {new Date(item.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+              <Like likedUserId={item} />
+            </div>
+ 
+            <div className="flex justify-between items-center">
+              <p className="text-lg font-bold text-gray-900">
+                {Number(item.price).toLocaleString()}₮
+              </p>
+              <div className="flex items-center bg-primary/10 px-2 py-1 rounded-full">
+                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
+                <span className="text-sm font-medium">4.8</span>
+              </div>
+            </div>
+ 
+            {item.delivery && (
+              <div className="text-xs text-green-600 font-medium">
+                Хүргэлттэй
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </section>
+)};
+ 
+export default ResultsPage;
+ 
+ 
