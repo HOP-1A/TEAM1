@@ -236,10 +236,6 @@ export default function Home() {
                       <p className="text-lg font-bold text-gray-900">
                         {Number(item.price).toLocaleString()}₮
                       </p>
-                      <div className="flex items-center bg-primary/10 px-2 py-1 rounded-full">
-                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
-                        <span className="text-sm font-medium">4.8</span>
-                      </div>
                     </div>
 
                     {item.delivery && (
