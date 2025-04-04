@@ -1,5 +1,5 @@
 "use client";
-
+ 
 import { Heart, Instagram, Phone, Search, Menu, X } from "lucide-react";
 import {
   SignInButton,
@@ -11,18 +11,19 @@ import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-
+import SearchThing from "../Search";
+ 
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-
+ 
 export default function NavBar() {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+ 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -30,7 +31,7 @@ export default function NavBar() {
       setIsMobileMenuOpen(false);
     }
   };
-
+ 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -38,7 +39,7 @@ export default function NavBar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+ 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -53,7 +54,7 @@ export default function NavBar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileMenuOpen]);
-
+ 
   return (
     <header
       className={`fixed w-full bg-white z-50 top-0 transition-shadow duration-300 ${
@@ -65,13 +66,13 @@ export default function NavBar() {
           <span className="text-white text-xs md:text-sm font-bold">
             Хүссэнээ зар, Хайснаа ол
           </span>
-
+ 
           <div className="flex items-center text-xs">
             <button className="flex items-center border-r border-rose-300 pr-4 md:pr-5">
               <Phone className="fill-white stroke-rose-500 w-3 h-3 md:w-4 md:h-4" />
               <span className="pl-1 md:pl-2 text-white">4444-4444</span>
             </button>
-
+ 
             <div className="flex items-center text-white pl-3 md:pl-5">
               <Link
                 href="https://www.facebook.com/zaryllc"
@@ -102,7 +103,7 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-
+ 
       <div className="relative">
         <div className="flex justify-between items-center px-4 md:px-6 lg:max-w-6xl lg:mx-auto h-14 md:h-20">
           <div className="flex items-center">
@@ -119,18 +120,13 @@ export default function NavBar() {
               />
             </button>
           </div>
-
+ 
           <form
             onSubmit={handleSearch}
             className="hidden md:flex flex-1 max-w-xl mx-4"
           >
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-10 px-4 pr-16 rounded-l-md border border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300"
-                placeholder="Барааны нэр, зарын дугаар..."
+            <div className="flex relative w-full">
+              <SearchThing
               />
               <button
                 type="submit"
@@ -140,7 +136,7 @@ export default function NavBar() {
               </button>
             </div>
           </form>
-
+ 
           <button
             className="md:hidden p-2 text-gray-700 mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -148,7 +144,7 @@ export default function NavBar() {
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
+ 
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
             <button
               onClick={() => router.push("/like")}
@@ -207,7 +203,7 @@ export default function NavBar() {
             </button>
           </div>
         </div>
-
+ 
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white py-3 px-4 border-t border-gray-200 shadow-lg mobile-menu-container">
             <form onSubmit={handleSearch} className="mb-3">
@@ -266,3 +262,4 @@ export default function NavBar() {
     </header>
   );
 }
+ 
