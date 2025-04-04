@@ -125,12 +125,12 @@ export default function NavBar() {
             onSubmit={handleSearch}
             className="hidden md:flex flex-1 max-w-xl mx-4"
           >
-            <div className="flex relative w-full">
+            <div className="flex relative border-rose-500 rounded-md w-[650px] border-b-2 border-t-2 border-l-2 border-r-2">
               <SearchThing
               />
               <button
                 type="submit"
-                className="absolute right-0 top-0 h-10 w-12 flex items-center justify-center bg-rose-500 text-white rounded-r-md hover:bg-rose-600 transition-colors"
+                className="absolute right-0 top-0 h-10 w-12 flex items-center justify-center bg-rose-500 text-white rounded-r hover:bg-rose-600 transition-colors"
               >
                 <Search size={18} />
               </button>

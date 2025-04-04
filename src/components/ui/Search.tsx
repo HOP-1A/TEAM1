@@ -24,7 +24,7 @@ export default function SearchThing() {
   return (
 
     <input
-      className="border-2 border-rose-500 rounded-md p-2 h-[40px] w-[535px] outline-none "
+      className="ml-2 border-rose-500 h-[50px] w-[570px] outline-none "
       type="text"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
