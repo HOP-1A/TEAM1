@@ -46,12 +46,12 @@ const Page = () => {
                   <ShoppingBasket className="text-xl text-rose-500" size={50} />
                 </div>
                 <div className="text-3xl mb-10 text-rose-500 font-bold">
-                  Таны сагс хоосон байна.
+                  Хадгалсан Бараа Байхгүй.
                 </div>
-                <div className="">Та бүтээгдэхүүн сагслаагүй байна.</div>
+                <div className="">Та бүтээгдэхүүн хадгалаагүй байна.</div>
                 <div className="mb-20">
-                  Бүтээгдэхүүн сонгож сагслах товчийш дарснаар таны сагсанд орох
-                  болно.
+                  Бүтээгдэхүүн сонгож хадгалах товчийш дарснаар таны хадгалсан
+                  бүтээгдэхүүнд орох болно.
                 </div>
                 <Button
                   className="hover:bg-rose-500 hover:text-white transition duration-300 rounded-xl"
@@ -61,24 +61,25 @@ const Page = () => {
                 </Button>
               </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            <div className="flex">
-              <div>
-                <div className="text-3xl font-bold ml-10">Хадгалсан Бараа</div>
-                {like.map((cartItem) => {
-                  return (
-                    <div
-                      key={cartItem.id}
-                      className="flex w-[800px] font-medium font-sans gap-3"
-                    >
-                      <div className="flex mt-5 ml-20 w-[700px] h-[120px] border-2 rounded-xl justify-between p-3 items-center">
-                        <div className="flex">
-                          <img
-                            className="flex h-[105px] mr-5 rounded-xl cursor-pointer"
-                            src={cartItem.productImg[0]}
-                          />
+          ) : (
+            <div>
+              <div className="flex">
+                <div>
+                  <div className="text-3xl font-bold ml-10">
+                    Хадгалсан Бараа
+                  </div>
+                  {like.map((cartItem) => {
+                    return (
+                      <div
+                        key={cartItem.id}
+                        className="flex w-[800px] font-medium font-sans gap-3"
+                      >
+                        <div className="flex mt-5 ml-20 w-[700px] h-[120px] border-2 rounded-xl justify-between p-3 items-center">
+                          <div className="flex">
+                            <img
+                              className="flex h-[105px] mr-5 rounded-xl cursor-pointer"
+                              src={cartItem.productImg[0]}
+                            />
                             <div>
                               <div className="text-xl w-fit truncate font-semibold ">
                                 {cartItem.name}

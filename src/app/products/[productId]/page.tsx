@@ -33,7 +33,7 @@ const Page = () => {
   const [selectProductImg, setSelectedProductImg] = useState<string>();
   const [listing, setListing] = useState<Listings | null>(null);
   const [quantity, setQuantity] = useState<string[]>([]);
-  const [quantity1, setQuantity1] = useState<string>("1");
+  const [quantity1, setQuantity1] = useState<string>("0");
   const { productId } = useParams() as { productId: string };
   const [loading, setLoading] = useState<boolean>(true);
   const { toast } = useToast();
@@ -72,7 +72,7 @@ const Page = () => {
     if (coincidedIndex === undefined) {
       cart.push({
         ...item,
-        quantity: 1,
+        quantity: Number(quantity1),
       });
     } else {
       cart[coincidedIndex].quantity =
