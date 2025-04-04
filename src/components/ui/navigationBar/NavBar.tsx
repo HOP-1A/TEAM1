@@ -69,7 +69,7 @@ export default function NavBar() {
           <div className="flex items-center text-xs">
             <button className="flex items-center border-r border-rose-300 pr-4 md:pr-5">
               <Phone className="fill-white stroke-rose-500 w-3 h-3 md:w-4 md:h-4" />
-              <span className="pl-1 md:pl-2 text-white">4444-4444</span>
+              <span className="pl-1 md:pl-2 text-white">7777-8984</span>
             </button>
 
             <div className="flex items-center text-white pl-3 md:pl-5">
@@ -114,7 +114,7 @@ export default function NavBar() {
             >
               <img
                 src="https://zary.mn/27a395c08037dc4652ee51434e509bb1.png"
-                className="w-16 md:w-24 h-auto"
+                className="w-16 md:w-24 h-auto hover:cursor-pointer"
                 alt="Zary logo"
               />
             </button>
